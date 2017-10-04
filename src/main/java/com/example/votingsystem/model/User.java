@@ -19,6 +19,19 @@ public class User extends AbstractBaseEntity {
     @Column(name = "role")
     private Roles role;
 
+    public User(String email, String password, Roles role) {
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
+    public User(Integer id, String email, String password, Roles role) {
+        super(id);
+        this.email = email;
+        this.password = password;
+        this.role = role;
+    }
+
     public String getEmail() {
         return email;
     }

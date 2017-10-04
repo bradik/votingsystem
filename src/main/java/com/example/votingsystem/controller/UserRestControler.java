@@ -6,9 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -28,9 +26,29 @@ public class UserRestControler {
     private static final Logger logger = LoggerFactory.getLogger(UserRestControler.class);
 
     @GetMapping(value = "/users")
-    public List<User> getRouteFilter() {
-        logger.info("getRouteFilter() request received");
+    public List<User> getAll() {
+        logger.info("getAll() request received");
 
         return service.findAll();
+    }
+
+    @GetMapping(value = "/user/{id}")
+    public User get(@PathVariable("id") int id) {
+        logger.info("get() request received");
+
+        return service.getById(id);
+    }
+
+    @PostMapping(value = "/user",consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody User user) {
+        logger.info("update() request received");
+
+        service.save(user);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    public void delete(@PathVariable("id") int id) {
+        logger.info("delete() request received");
+        service.delete(id);
     }
 }
