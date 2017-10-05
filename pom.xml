@@ -23,7 +23,7 @@
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 		<java.version>1.8</java.version>
 		<!--JSON-->
-		<jackson-json.version>2.9.1</jackson-json.version>
+		<!--<jackson.version>2.9.1</jackson.version>-->
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
@@ -32,21 +32,21 @@
 	<dependencies>
 
 		<!--JSON-->
-		<dependency>
-			<groupId>com.fasterxml.jackson.core</groupId>
-			<artifactId>jackson-databind</artifactId>
-			<version>${jackson-json.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-hibernate5</artifactId>
-			<version>${jackson-json.version}</version>
-		</dependency>
-		<dependency>
-			<groupId>com.fasterxml.jackson.datatype</groupId>
-			<artifactId>jackson-datatype-jsr310</artifactId>
-			<version>${jackson-json.version}</version>
-		</dependency>
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.core</groupId>-->
+			<!--<artifactId>jackson-databind</artifactId>-->
+			<!--<version>${jackson.version}</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.datatype</groupId>-->
+			<!--<artifactId>jackson-datatype-hibernate5</artifactId>-->
+			<!--<version>${jackson.version}</version>-->
+		<!--</dependency>-->
+		<!--<dependency>-->
+			<!--<groupId>com.fasterxml.jackson.datatype</groupId>-->
+			<!--<artifactId>jackson-datatype-jsr310</artifactId>-->
+			<!--<version>${jackson.version}</version>-->
+		<!--</dependency>-->
 
 		<!-- Logging with SLF4J & LogBack -->
 		<dependency>

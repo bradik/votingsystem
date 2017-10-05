@@ -1,23 +1,32 @@
 package com.example.votingsystem.model;
 
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
+
 import javax.persistence.*;
 
 /**
  * Created by Brad on 03.10.2017.
  */
 
+@JsonIdentityInfo(generator = ObjectIdGenerators.PropertyGenerator.class,property = "id")
 @Entity
 @Table(name = "users")
 public class User extends AbstractBaseEntity {
 
     @Column(name = "email")
     private String email;
+
     @Column(name = "password")
     private String password;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role")
     private Roles role;
+
+    public User() {
+
+    }
 
     public User(String email, String password, Roles role) {
         this.email = email;

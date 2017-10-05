@@ -19,6 +19,8 @@ public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getById(Integer id);
 
+    User getByEmail(String email);
+
     @Transactional
     @Override
     User save(User user);

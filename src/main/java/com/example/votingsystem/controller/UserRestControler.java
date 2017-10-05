@@ -39,6 +39,13 @@ public class UserRestControler {
         return service.getById(id);
     }
 
+    @GetMapping(value = "/userbyemail/{email}")
+    public User getByEmail(@PathVariable("email") String email) {
+        logger.info("getByEmail() request received");
+
+        return service.getByEmail(email);
+    }
+
     @PostMapping(value = "/user",consumes = MediaType.APPLICATION_JSON_VALUE)
     public void update(@RequestBody User user) {
         logger.info("update() request received");
@@ -46,7 +53,7 @@ public class UserRestControler {
         service.save(user);
     }
 
-    @DeleteMapping(value = "/{id}")
+    @DeleteMapping(value = "/user/{id}")
     public void delete(@PathVariable("id") int id) {
         logger.info("delete() request received");
         service.delete(id);
