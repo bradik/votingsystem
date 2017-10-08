@@ -12,6 +12,15 @@ public class Restaurant extends AbstractNamedEntity {
 
     private String address;
 
+    public Restaurant() {
+
+    }
+
+    public Restaurant(String name, String address) {
+        this.name = name;
+        this.address = address;
+    }
+
     public String getAddress() {
         return address;
     }

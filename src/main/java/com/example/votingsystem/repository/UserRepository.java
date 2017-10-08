@@ -7,6 +7,7 @@ import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 import org.springframework.data.repository.CrudRepository;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.util.List;
 
@@ -14,10 +15,15 @@ import java.util.List;
  * Created by Brad on 16.09.2017.
  */
 
-@Repository
+@RestController
+@Transactional(readOnly = true)
 public interface UserRepository extends JpaRepository<User, Integer> {
 
     User getById(Integer id);
+
+    User getByEmail(String email);
+
+    List<User> findAll();
 
     @Transactional
     @Override
@@ -26,7 +32,5 @@ public interface UserRepository extends JpaRepository<User, Integer> {
     @Transactional
     @Override
     void delete(Integer id);
-
-    List<User> findAll();
 
 }

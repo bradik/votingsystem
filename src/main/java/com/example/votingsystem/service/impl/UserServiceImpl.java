@@ -25,8 +25,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void save(User user) {
-        dao.save(user);
+    public User getByEmail(String email) {
+        return dao.getByEmail(email);
+    }
+
+    @Override
+    public List<User> getAll() {
+        List<User> result = new ArrayList<>();
+        result = dao.findAll();
+        return result;
+    }
+
+    @Override
+    public User save(User user) {
+        return dao.save(user);
     }
 
     @Override
@@ -34,10 +46,4 @@ public class UserServiceImpl implements UserService {
         dao.delete(id);
     }
 
-    @Override
-    public List<User> findAll() {
-        List<User> result = new ArrayList<>();
-        result = dao.findAll();
-        return result;
-    }
 }

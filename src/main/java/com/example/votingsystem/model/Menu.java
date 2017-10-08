@@ -34,6 +34,24 @@ public class Menu extends AbstractBaseEntity {
     @Column(name = "price")
     private Long price;
 
+    public Menu() {
+
+    }
+
+    public Menu(Date date, Restaurant restaurant, Meal meal, Long price) {
+        this.date = date;
+        this.restaurant = restaurant;
+        this.meal = meal;
+        this.price = price;
+    }
+
+    public Menu(Restaurant restaurant, Meal meal, Long price) {
+        this.date = new Date();
+        this.restaurant = restaurant;
+        this.meal = meal;
+        this.price = price;
+    }
+
     public Date getDate() {
         return date;
     }

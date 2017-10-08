@@ -28,8 +28,18 @@ public class RestaurantServiceImpl implements RestaurantService {
     }
 
     @Override
-    public void save(Restaurant restaurant) {
-        dao.save(restaurant);
+    public Restaurant getByName(String name) {
+        return dao.getByName(name);
+    }
+
+    @Override
+    public List<Restaurant> getAll() {
+        return dao.findAll();
+    }
+
+    @Override
+    public Restaurant save(Restaurant restaurant) {
+        return dao.save(restaurant);
     }
 
     @Override

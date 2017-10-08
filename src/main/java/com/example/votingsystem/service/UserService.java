@@ -12,10 +12,12 @@ public interface UserService {
 
     User getById(Integer id);
 
-    void save(User route);
+    User getByEmail(String email);
+
+    List<User> getAll();
+
+    User save(User user);
 
     void delete(Integer id);
-
-    List<User> findAll();
 
 }
