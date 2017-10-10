@@ -18,40 +18,41 @@ import java.util.List;
  */
 
 @RestController
-@RequestMapping(value = UserRestControler.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
-public class UserRestControler {
+@RequestMapping(value = AdminUserRestControler.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
+public class AdminUserRestControler {
     static final String REST_URL = "/rest/admin/users";
-    private final Logger log = LoggerFactory.getLogger(getClass());
+
+    private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
     private UserService service;
 
-    private static final Logger logger = LoggerFactory.getLogger(UserRestControler.class);
+
 
     @GetMapping
     public List<User> getAll() {
-        logger.info("getAll() request received");
+        LOG.info("getAll() request received");
 
         return service.getAll();
     }
 
     @GetMapping(value = "/{id}")
     public User get(@PathVariable("id") int id) {
-        logger.info("get() request received");
+        LOG.info("get() request received");
 
         return service.getById(id);
     }
 
     @GetMapping(value = "/by")
     public User getByName(@RequestParam("email") String email) {
-        logger.info("getByName() request received");
+        LOG.info("getByName() request received");
 
         return service.getByEmail(email);
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<User> update(@RequestBody User user) {
-        logger.info("update() request received");
+        LOG.info("update() request received");
 
         User created =  service.save(user);
 
@@ -64,7 +65,7 @@ public class UserRestControler {
 
     @DeleteMapping(value = "/{id}")
     public void delete(@PathVariable("id") int id) {
-        logger.info("delete() request received");
+        LOG.info("delete() request received");
         service.delete(id);
     }
 }

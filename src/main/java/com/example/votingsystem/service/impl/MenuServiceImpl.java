@@ -7,11 +7,15 @@ import com.example.votingsystem.repository.MealRepository;
 import com.example.votingsystem.repository.MenuRepository;
 import com.example.votingsystem.repository.RestaurantRepository;
 import com.example.votingsystem.service.MenuService;
+import com.example.votingsystem.to.MenuItemTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
+import static java.math.BigDecimal.ZERO;
 
 /**
  * Created by Brad on 08.10.2017.
@@ -40,21 +44,22 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public Menu save(Integer barId, String mealName, Long price) {
+    public Menu save(Integer barId, MenuItemTo item) {
 
-        Menu menu = menuDao.getItem(barId, mealName, new Date());
+        Menu menu = menuDao.getItem(barId, item.getMealName(), item.getDate() == null ? new Date() : item.getDate());
 
         if (menu == null) {
             Restaurant restaurant = restaurantDao.getById(barId);
-            Meal meal = mealDao.getByName(mealName);
+            Meal meal = mealDao.getByName(item.getMealName());
             if (meal == null) {
-                meal = new Meal(mealName);
+                meal = new Meal(item.getMealName());
                 mealDao.save(meal);
             }
-            menu = new Menu(restaurant, meal, 0L);
+
+            menu = new Menu(restaurant, meal, ZERO);
         }
 
-        menu.setPrice(price);
+        menu.setPrice(item.getPrice());
 
         return menuDao.save(menu);
     }

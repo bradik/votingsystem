@@ -1,16 +1,20 @@
 package com.example.votingsystem.web;
 
 import com.example.votingsystem.json.JsonUtil;
+import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.model.Restaurant;
-import org.junit.Assert;
+import com.example.votingsystem.to.MenuItemTo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
+import java.math.BigDecimal;
 import java.util.List;
 
-import static com.example.votingsystem.web.RestaurantRestControler.REST_URL;
+import static com.example.votingsystem.web.AdminRestaurantRestControler.REST_URL;
+import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.core.StringContains.containsString;
+import static org.junit.Assert.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
@@ -21,7 +25,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 /**
  * Created by Brad on 07.10.2017.
  */
-public class RestaurantRestControlerTest extends AbstractControllerTest {
+public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
 
     @Before
     public void setUp() {
@@ -35,7 +39,7 @@ public class RestaurantRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void getTest() throws Exception {
+    public void testGet() throws Exception {
 
         Restaurant testItem = restaurantService.getAll().get(0);
         final String expected = JsonUtil.writeValue(testItem);
@@ -44,14 +48,14 @@ public class RestaurantRestControlerTest extends AbstractControllerTest {
                 mockMvc.perform(get(REST_URL + "/" + testItem.getId()))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andDo(print())
+                        //.andDo(print())
                         .andReturn().getResponse().getContentAsString();
 
-        Assert.assertThat(actual, containsString(expected));
+        assertThat(actual, containsString(expected));
     }
 
     @Test
-    public void getByNameTest() throws Exception {
+    public void testGetByName() throws Exception {
 
         Restaurant testItem = restaurantService.getAll().get(0);
         String expected = JsonUtil.writeValue(testItem);
@@ -60,14 +64,14 @@ public class RestaurantRestControlerTest extends AbstractControllerTest {
                 mockMvc.perform(get(REST_URL + "/by").param("name", testItem.getName()))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andDo(print())
+                        //.andDo(print())
                         .andReturn().getResponse().getContentAsString();
 
-        Assert.assertThat(actual, containsString(expected));
+        assertThat(actual, containsString(expected));
     }
 
     @Test
-    public void getAllTest() throws Exception {
+    public void testGetAll() throws Exception {
 
         List<Restaurant> items1 = restaurantService.getAll();
 
@@ -75,17 +79,17 @@ public class RestaurantRestControlerTest extends AbstractControllerTest {
                 mockMvc.perform(get(REST_URL))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andDo(print())
+                        //.andDo(print())
                         .andReturn().getResponse().getContentAsString();
 
         List<Restaurant> items2 = JsonUtil.readValues(actual, Restaurant.class);
 
-        Assert.assertTrue(items1.size() == items2.size());
+        assertTrue(items1.size() == items2.size());
 
     }
 
     @Test
-    public void updateTest() throws Exception {
+    public void testUpdate() throws Exception {
 
         Restaurant newItem = new Restaurant("Bear Bar", "ул. Комсомола д. 45");
 
@@ -95,39 +99,62 @@ public class RestaurantRestControlerTest extends AbstractControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newItem))
         )
-                .andExpect(status().isCreated())
-                .andDo(print());
+                //.andDo(print())
+                .andExpect(status().isCreated());
 
         int count2 = restaurantService.getAll().size();
 
-        Assert.assertTrue(count2 - count1 == 1);
+        assertTrue(count2 - count1 == 1);
 
     }
 
     @Test
-    public void deleteTest() throws Exception {
+    public void testDelete() throws Exception {
 
         Restaurant testItem = restaurantService.getAll().get(0);
 
         int count1 = restaurantService.getAll().size();
 
         mockMvc.perform(delete(REST_URL + "/" + testItem.getId()))
-                .andDo(print());
+                .andExpect(status().isOk())
+                .andDo(print())
+                .andExpect(status().isCreated());
 
         int count2 = restaurantService.getAll().size();
 
-        Assert.assertTrue(count1 - count2 == 1);
+        assertTrue(count1 - count2 == 1);
 
     }
 
     @Test
-    public void updateBarsMenuItemTest() throws Exception {
+    public void testUpdateBarsMenuItem() throws Exception {
 
-        Restaurant testItem = restaurantService.getAll().get(0);
-
-        mockMvc.perform(post(REST_URL + "/"+testItem.getId()+"/meals").contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andDo(print());
+        Restaurant testBar = restaurantService.getAll().get(0);
+        MenuItemTo itemTo = new MenuItemTo("Уха царская", BigDecimal.valueOf(150.70), null);
 
 
+        String response =
+        mockMvc.perform(post(REST_URL + "/"+testBar.getId()+"/meals")
+                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                .content(JsonUtil.writeValue(itemTo)))
+                //.andDo(print())
+                .andExpect(status().isCreated())
+                .andReturn().getResponse().getContentAsString();
+
+        Menu testMenu = JsonUtil.readValue(response,Menu.class);
+
+        assertThat("Уха царская",containsString(testMenu.getMeal().getName()));
+        assertThat(BigDecimal.valueOf(150.70), comparesEqualTo(testMenu.getPrice()));
+
+    }
+
+    @Test
+    public void testDeleteMenuItems()  throws Exception {
+        //TODO
+    }
+
+    @Test
+    public void testDeleteMenuItem()  throws Exception {
+        //TODO
     }
 }

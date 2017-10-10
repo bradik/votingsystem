@@ -3,14 +3,13 @@ package com.example.votingsystem.web;
 import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Roles;
 import com.example.votingsystem.model.User;
-import org.hamcrest.core.StringContains;
 import org.junit.Assert;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
 import java.util.List;
 
-import static com.example.votingsystem.web.UserRestControler.REST_URL;
+import static com.example.votingsystem.web.AdminUserRestControler.REST_URL;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -19,8 +18,25 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-public class UserRestControlerTest extends AbstractControllerTest {
+public class AdminUserRestControlerTest extends AbstractControllerTest {
 
+    @Test
+    public void testGetAll() throws Exception {
+
+        List<User> items1 = userService.getAll();
+
+        String actual =
+                mockMvc.perform(get(REST_URL))
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        //.andDo(print())
+                        .andReturn().getResponse().getContentAsString();
+
+        List<User> items2 = JsonUtil.readValues(actual, User.class);
+
+        Assert.assertTrue(items1.size() == items2.size());
+
+    }
 
     @Test
     public void getTest() throws Exception {
@@ -39,7 +55,7 @@ public class UserRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void getByEmailTest() throws Exception {
+    public void testGetByEmail() throws Exception {
 
         User testItem = userService.getById(1);
         String expected = JsonUtil.writeValue(testItem);
@@ -55,27 +71,9 @@ public class UserRestControlerTest extends AbstractControllerTest {
 
     }
 
-    @Test
-    public void getAllTest() throws Exception {
-
-        List<User> items1 = userService.getAll();
-
-        String actual =
-                mockMvc.perform(get(REST_URL))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andDo(print())
-                        .andReturn().getResponse().getContentAsString();
-
-        List<User> items2 = JsonUtil.readValues(actual, User.class);
-
-        Assert.assertTrue(items1.size() == items2.size());
-
-    }
-
 
     @Test
-    public void createTest() throws Exception {
+    public void testCreate() throws Exception {
 
         User newItem = new User("newuser@ya.ru", "123", Roles.USER);
 
@@ -95,7 +93,7 @@ public class UserRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void deleteTest() throws Exception {
+    public void testDelete() throws Exception {
 
         int count1 = userService.getAll().size();
 
