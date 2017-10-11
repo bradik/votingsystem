@@ -25,7 +25,7 @@ public class Menu extends AbstractBaseEntity {
 
     @Column(name = "date")
     @NotNull
-    @Temporal(TemporalType.TIMESTAMP)
+    @Temporal(TemporalType.DATE)
     private Date date = new Date();
 
     @ManyToOne(fetch = FetchType.LAZY)

@@ -26,4 +26,13 @@ public class MenuItemTo implements Serializable {
     private BigDecimal price;
     private Date date;
 
+
+    @Override
+    public String toString() {
+        return "MenuItemTo{" +
+                "mealName='" + mealName + '\'' +
+                ", price=" + price +
+                ", date=" + date +
+                '}';
+    }
 }

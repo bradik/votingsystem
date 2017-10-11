@@ -34,7 +34,13 @@ public class MenuServiceImpl implements MenuService {
 
     @Override
     public List<Menu> getAll(Integer barId) {
-        return menuDao.findAll(barId);
+        return menuDao.findBy(barId, null, null, null);
+    }
+
+    @Override
+    public List<Menu> findBy(Integer barId, Date date, Integer mealId, String mealName) {
+
+        return menuDao.findBy(barId, date, mealId, mealName);
     }
 
     @Override
@@ -65,19 +71,8 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public void deleteAll(Integer barId) {
+    public void delete(Integer id) {
+        menuDao.delete(id);
 
-        List<Menu> menuList = menuDao.findAll(barId);
-        for (Menu menu : menuList) {
-            menuDao.delete(menu.getId());
-        }
-    }
-
-    @Override
-    public void delete(Integer barId, String mealName) {
-        Menu menu = menuDao.getItem(barId, mealName, new Date());
-        if (menu != null) {
-            menuDao.delete(menu.getId());
-        }
     }
 }

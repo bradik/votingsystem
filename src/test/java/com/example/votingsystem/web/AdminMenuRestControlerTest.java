@@ -5,46 +5,62 @@ import com.example.votingsystem.model.Meal;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.to.MenuItemTo;
+import com.example.votingsystem.util.DateFormater;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
 import java.math.BigDecimal;
+import java.util.Date;
+import java.util.List;
 
 import static com.example.votingsystem.web.AdminMenuRestControler.REST_URL;
 import static org.hamcrest.Matchers.comparesEqualTo;
+import static org.hamcrest.Matchers.is;
+import static org.hamcrest.Matchers.not;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
+    private static final Restaurant TEST_BAR_1 = new Restaurant("Пиворама", "Большевиков  проспект, 18 к2");
+    private static final Restaurant TEST_BAR_2 = new Restaurant("Бахрома", "Наставников, проспек, 24 к1");
+    private static final Date YESTERDAY = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+
     @Before
     public void setUp() {
 
-        Restaurant testBar1 = new Restaurant("Пиворама", "Большевиков  проспект, 18 к2");
-        Restaurant testBar2 = new Restaurant("Бахрома", "Наставников, проспек, 24 к1");
+        restaurantService.save(TEST_BAR_1);
+        restaurantService.save(TEST_BAR_2);
 
-        restaurantService.save(testBar1);
-        restaurantService.save(testBar2);
+        MenuItemTo menuItem1 = new MenuItemTo("Еда1", BigDecimal.valueOf(200), null);
+        MenuItemTo menuItem2 = new MenuItemTo("Еда2", BigDecimal.valueOf(250), null);
 
-        Menu menuItem1 = new Menu(testBar1,new Meal("Еда1"),BigDecimal.valueOf(200));
-        Menu menuItem2 = new Menu(testBar1,new Meal("Еда2"),BigDecimal.valueOf(300));
+        menuService.save(TEST_BAR_1.getId(), menuItem1);
+        menuService.save(TEST_BAR_1.getId(), menuItem2);
+
+        MenuItemTo menuItem21 = new MenuItemTo("Еда1", BigDecimal.valueOf(200), YESTERDAY);
+        MenuItemTo menuItem22 = new MenuItemTo("Еда2", BigDecimal.valueOf(250), YESTERDAY);
+
+        Menu menu = menuService.save(TEST_BAR_2.getId(), menuItem21);
+        menuService.save(TEST_BAR_2.getId(), menuItem22);
+
     }
 
     @Test
     public void testUpdateBarsMenuItem() throws Exception {
 
-        Restaurant testBar = restaurantService.getAll().get(0);
         MenuItemTo itemTo = new MenuItemTo("Уха царская", BigDecimal.valueOf(150.70), null);
 
 
         String response =
-                mockMvc.perform(post(REST_URL + "/"+testBar.getId()+"/meals")
+                mockMvc.perform(post(REST_URL + "/"+TEST_BAR_1.getId()+"/meals")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
                         .content(JsonUtil.writeValue(itemTo)))
                         //.andDo(print())
@@ -60,16 +76,30 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
     @Test
     public void testDeleteMenuItems()  throws Exception {
-        Restaurant testBar = restaurantService.getAll().get(0);
-        mockMvc.perform(delete(REST_URL + "/"+testBar.getId()+"/meals"))
+
+        int size1 = menuService.getAll(TEST_BAR_1.getId()).size();
+
+        mockMvc.perform(delete(REST_URL + "/"+TEST_BAR_1.getId()+"/meals"))
                 .andDo(print())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
                 .andExpect(status().isOk());
+
+        int size2 = menuService.getAll(TEST_BAR_1.getId()).size();
+
+        assertThat(size1, is(not(size2)));
 
     }
 
     @Test
     public void testDeleteMenuItem()  throws Exception {
-        //TODO
+        List<Menu> menuList = menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null);
+
+        mockMvc.perform(delete(REST_URL + "/"+TEST_BAR_2.getId()+"/meals/by")
+                .param("date", DateFormater.of(YESTERDAY)))
+                .andDo(print())
+                .andExpect(status().isOk());
+
+
     }
 
 }

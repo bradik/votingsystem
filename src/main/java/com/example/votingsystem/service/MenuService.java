@@ -14,12 +14,12 @@ public interface MenuService {
 
     List<Menu> getAll(Integer barId);
 
+    List<Menu> findBy(Integer barId,Date date,Integer mealId,String mealName);
+
     Menu get(Integer barId, String mealName);
 
     Menu save(Integer barId, MenuItemTo item);
 
-    void deleteAll(Integer barId);
-
-    void delete(Integer barId, String mealName);
+    void delete(Integer id);
 
 }
