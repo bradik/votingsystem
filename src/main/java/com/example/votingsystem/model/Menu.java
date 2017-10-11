@@ -5,6 +5,7 @@ import org.hibernate.annotations.OnDeleteAction;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.util.Date;
 
 /**
@@ -32,7 +33,25 @@ public class Menu extends AbstractBaseEntity {
     private Meal meal;
 
     @Column(name = "price")
-    private Long price;
+    private BigDecimal price;
+
+    public Menu() {
+
+    }
+
+    public Menu(Date date, Restaurant restaurant, Meal meal, BigDecimal price) {
+        this.date = date;
+        this.restaurant = restaurant;
+        this.meal = meal;
+        this.price = price;
+    }
+
+    public Menu(Restaurant restaurant, Meal meal, BigDecimal price) {
+        this.date = new Date();
+        this.restaurant = restaurant;
+        this.meal = meal;
+        this.price = price;
+    }
 
     public Date getDate() {
         return date;
@@ -58,11 +77,11 @@ public class Menu extends AbstractBaseEntity {
         this.meal = meal;
     }
 
-    public Long getPrice() {
+    public BigDecimal getPrice() {
         return price;
     }
 
-    public void setPrice(Long price) {
+    public void setPrice(BigDecimal price) {
         this.price = price;
     }
 }

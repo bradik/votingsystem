@@ -13,7 +13,11 @@ public interface RestaurantService {
 
     Restaurant getById(Integer id);
 
-    void save(Restaurant restaurant);
+    Restaurant getByName(String name);
+
+    List<Restaurant> getAll();
+
+    Restaurant save(Restaurant restaurant);
 
     void delete(Integer id);
 

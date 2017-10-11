@@ -14,10 +14,10 @@ public interface UserService {
 
     User getByEmail(String email);
 
-    void save(User route);
+    List<User> getAll();
+
+    User save(User user);
 
     void delete(Integer id);
-
-    List<User> findAll();
 
 }
