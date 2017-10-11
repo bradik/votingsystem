@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +39,7 @@ public class MenuServiceImpl implements MenuService {
     }
 
     @Override
-    public List<Menu> findBy(Integer barId, Date date, Integer mealId, String mealName) {
+    public List<Menu> findBy(Integer barId, LocalDate date, Integer mealId, String mealName) {
 
         return menuDao.findBy(barId, date, mealId, mealName);
     }
@@ -46,13 +47,13 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Menu get(Integer barId, String mealName) {
 
-        return menuDao.getItem(barId, mealName, new Date());
+        return menuDao.getItem(barId, mealName, LocalDate.now());
     }
 
     @Override
     public Menu save(Integer barId, MenuItemTo item) {
 
-        Menu menu = menuDao.getItem(barId, item.getMealName(), item.getDate() == null ? new Date() : item.getDate());
+        Menu menu = menuDao.getItem(barId, item.getMealName(), item.getDate() == null ? LocalDate.now() : item.getDate());
 
         if (menu == null) {
             Restaurant restaurant = restaurantDao.getById(barId);

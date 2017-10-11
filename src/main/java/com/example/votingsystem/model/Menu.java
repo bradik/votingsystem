@@ -1,15 +1,19 @@
 package com.example.votingsystem.model;
 
+import com.example.votingsystem.util.DateTimeUtil;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
+import org.hibernate.annotations.Type;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 
 /**
@@ -25,8 +29,9 @@ public class Menu extends AbstractBaseEntity {
 
     @Column(name = "date")
     @NotNull
-    @Temporal(TemporalType.DATE)
-    private Date date = new Date();
+    //@Type(type="org.joda.time.contrib.hibernate.PersistentLocalDate")
+    //@DateTimeFormat(pattern = DateTimeUtil.DATE_TIME_PATTERN)
+    private LocalDate date = LocalDate.now();
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "restaurant_id", nullable = false)

@@ -1,16 +1,16 @@
 package com.example.votingsystem.web;
 
 import com.example.votingsystem.json.JsonUtil;
-import com.example.votingsystem.model.Meal;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.to.MenuItemTo;
-import com.example.votingsystem.util.DateFormater;
+import com.example.votingsystem.util.DateTimeUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.List;
 
@@ -31,7 +31,7 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
     private static final Restaurant TEST_BAR_1 = new Restaurant("Пиворама", "Большевиков  проспект, 18 к2");
     private static final Restaurant TEST_BAR_2 = new Restaurant("Бахрома", "Наставников, проспек, 24 к1");
-    private static final Date YESTERDAY = new Date(System.currentTimeMillis() - 24 * 60 * 60 * 1000);
+    private static final LocalDate YESTERDAY = LocalDate.now().minusDays(1);
 
     @Before
     public void setUp() {
@@ -95,7 +95,7 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
         List<Menu> menuList = menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null);
 
         mockMvc.perform(delete(REST_URL + "/"+TEST_BAR_2.getId()+"/meals/by")
-                .param("date", DateFormater.of(YESTERDAY)))
+                .param("date", DateTimeUtil.of(YESTERDAY)))
                 .andDo(print())
                 .andExpect(status().isOk());
 

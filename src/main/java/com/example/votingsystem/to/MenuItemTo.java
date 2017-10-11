@@ -4,11 +4,10 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-import org.springframework.web.bind.annotation.RequestBody;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 /**
  * Created by Brad on 10.10.2017.
@@ -24,7 +23,7 @@ public class MenuItemTo implements Serializable {
 
     private String mealName;
     private BigDecimal price;
-    private Date date;
+    private LocalDate date;
 
 
     @Override

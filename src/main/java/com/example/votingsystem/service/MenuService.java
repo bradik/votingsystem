@@ -3,8 +3,7 @@ package com.example.votingsystem.service;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.to.MenuItemTo;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -14,7 +13,7 @@ public interface MenuService {
 
     List<Menu> getAll(Integer barId);
 
-    List<Menu> findBy(Integer barId,Date date,Integer mealId,String mealName);
+    List<Menu> findBy(Integer barId, LocalDate date, Integer mealId, String mealName);
 
     Menu get(Integer barId, String mealName);
 
