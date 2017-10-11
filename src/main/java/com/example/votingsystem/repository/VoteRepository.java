@@ -1,7 +1,6 @@
 package com.example.votingsystem.repository;
 
-import com.example.votingsystem.model.Meal;
-import com.example.votingsystem.model.Poll;
+import com.example.votingsystem.model.Vote;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -10,6 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
  */
 
 @Transactional(readOnly = true)
-public interface PollRepository extends JpaRepository<Poll, Integer> {
+public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
 }

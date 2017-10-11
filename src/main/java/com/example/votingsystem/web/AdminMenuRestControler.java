@@ -2,7 +2,6 @@ package com.example.votingsystem.web;
 
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.service.MenuService;
-import com.example.votingsystem.service.RestaurantService;
 import com.example.votingsystem.to.MenuItemTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,9 +26,6 @@ public class AdminMenuRestControler {
     private final Logger LOG = LoggerFactory.getLogger(getClass());
 
     @Autowired
-    private RestaurantService restaurantService;
-
-    @Autowired
     private MenuService menuService;
 
     @PostMapping(value = "/{id}/meals", consumes = MediaType.APPLICATION_JSON_VALUE)
@@ -40,7 +36,7 @@ public class AdminMenuRestControler {
 
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/bars/{idBar}/meals/{name}")
-                .buildAndExpand(created.getRestaurant().getId(),created.getMeal().getName()).toUri();
+                .buildAndExpand(created.getRestaurant().getId(), created.getMeal().getName()).toUri();
 
         return ResponseEntity.created(uriOfNewResource).body(created);
     }
@@ -48,13 +44,15 @@ public class AdminMenuRestControler {
     @DeleteMapping(value = "/{idBar}}/meals")
     public void deleteMenuItems(@PathVariable("idBar") Integer idBar) {
         LOG.info("deleteMenuItems() request received");
-        //TODO
+
+        menuService.deleteAll(idBar);
     }
 
-    @DeleteMapping(value = "/{idBar}}/meals/{idMeal}")
-    public void deleteMenuItem(@PathVariable("idBar") Integer idBar, @PathVariable("idMeal") Integer idMeal) {
+    @DeleteMapping(value = "/{idBar}}/meals/{meal}")
+    public void deleteMenuItem(@PathVariable("idBar") Integer idBar, @PathVariable("meal") String mealName) {
         LOG.info("deleteMenuItem() request received");
-        //TODO
+
+        menuService.delete(idBar, mealName);
     }
 
 }

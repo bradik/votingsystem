@@ -1,5 +1,6 @@
 package com.example.votingsystem.web;
 
+import com.example.votingsystem.service.MenuService;
 import com.example.votingsystem.service.RestaurantService;
 import com.example.votingsystem.service.UserService;
 import org.junit.Before;
@@ -35,6 +36,9 @@ abstract public class AbstractControllerTest {
 
     @Autowired
     protected RestaurantService restaurantService;
+
+    @Autowired
+    protected MenuService menuService;
 
     @Before
     public void setUp() {

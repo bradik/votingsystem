@@ -126,35 +126,4 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
 
     }
 
-    @Test
-    public void testUpdateBarsMenuItem() throws Exception {
-
-        Restaurant testBar = restaurantService.getAll().get(0);
-        MenuItemTo itemTo = new MenuItemTo("Уха царская", BigDecimal.valueOf(150.70), null);
-
-
-        String response =
-        mockMvc.perform(post(REST_URL + "/"+testBar.getId()+"/meals")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .content(JsonUtil.writeValue(itemTo)))
-                //.andDo(print())
-                .andExpect(status().isCreated())
-                .andReturn().getResponse().getContentAsString();
-
-        Menu testMenu = JsonUtil.readValue(response,Menu.class);
-
-        assertThat("Уха царская",containsString(testMenu.getMeal().getName()));
-        assertThat(BigDecimal.valueOf(150.70), comparesEqualTo(testMenu.getPrice()));
-
-    }
-
-    @Test
-    public void testDeleteMenuItems()  throws Exception {
-        //TODO
-    }
-
-    @Test
-    public void testDeleteMenuItem()  throws Exception {
-        //TODO
-    }
 }

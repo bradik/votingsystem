@@ -11,8 +11,8 @@ import java.util.Date;
  * Created by Brad on 03.10.2017.
  */
 @Entity
-@Table(name = "polls")
-public class Poll extends AbstractBaseEntity {
+@Table(name = "votes")
+public class Vote extends AbstractBaseEntity {
 
     @Column(name = "date")
     @NotNull
