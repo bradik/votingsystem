@@ -53,7 +53,8 @@ public class MenuServiceImpl implements MenuService {
     @Override
     public Menu save(Integer barId, MenuItemTo item) {
 
-        Menu menu = menuDao.getItem(barId, item.getMealName(), item.getDate() == null ? LocalDate.now() : item.getDate());
+        LocalDate date = item.getDate() == null ? LocalDate.now() : item.getDate();
+        Menu menu = menuDao.getItem(barId, item.getMealName(), date);
 
         if (menu == null) {
             Restaurant restaurant = restaurantDao.getById(barId);
@@ -63,7 +64,7 @@ public class MenuServiceImpl implements MenuService {
                 mealDao.save(meal);
             }
 
-            menu = new Menu(restaurant, meal, ZERO);
+            menu = new Menu(restaurant, meal, ZERO, date);
         }
 
         menu.setPrice(item.getPrice());

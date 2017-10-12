@@ -48,9 +48,11 @@ public class Menu extends AbstractBaseEntity {
     @Column(name = "price")
     private BigDecimal price;
 
-    public Menu(Restaurant restaurant, Meal meal, BigDecimal price) {
+    public Menu(Restaurant restaurant, Meal meal, BigDecimal price, LocalDate date) {
+
         this.restaurant = restaurant;
         this.meal = meal;
         this.price = price;
+        this.date = date;
     }
 }
