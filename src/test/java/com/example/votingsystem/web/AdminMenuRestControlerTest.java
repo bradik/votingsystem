@@ -116,13 +116,14 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
         int size1 = menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null).size();
 
         mockMvc.perform(delete(REST_URL + "/" + TEST_BAR_2.getId() + "/meals/by")
+                .param("name", "Еда2")
                 .param("date", DateTimeUtil.of(YESTERDAY)))
                 .andDo(print())
                 .andExpect(status().isOk());
 
         int size2 = menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null).size();
 
-        assertThat(size1 - size2, is(2));
+        assertThat(size1 - size2, is(1));
     }
 
 }

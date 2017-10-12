@@ -22,9 +22,16 @@ public class VoteRestControler {
 
     @PutMapping(value = "/{id}/vote",consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Vote> putVote(@PathVariable("id") Integer barId, @RequestBody VoteTo voteTo) {
+
+        //Отдать голос за ресторан
+        //	PUT/user/bar/{id}/vote
+        //Only one vote counted per user
+        //If user votes again the same day:
+        //o If it is before 11:00 we asume that he changed his mind.
+        //o If it is after 11:00 then it is too late, vote can 't be changed
         //TODO
-        //    Отдать голос за ресторан
-        //      •	PUT/user/bar/{id}/vote
+
+
         return null;
     }
 

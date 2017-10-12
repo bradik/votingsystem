@@ -66,8 +66,8 @@ public class AdminMenuRestControler {
     public ResponseEntity<Integer> deleteMenuItemsBy(@PathVariable("barid") Integer barId,
                                                      @DateTimeFormat(pattern = DATE_TIME_PATTERN)
                                                      @RequestParam(value = "date", required = false) LocalDate date,
-                                                     @RequestParam(value = "mealid", required = false) Integer mealId,
-                                                     @RequestParam(value = "mealname", required = false) String mealName) {
+                                                     @RequestParam(value = "id", required = false) Integer mealId,
+                                                     @RequestParam(value = "name", required = false) String mealName) {
 
         LOG.info("deleteMenuItemsBy() request received");
         LOG.debug("barid = {}, date={}, mealid = {}, mealname = {}", barId, date, mealId, mealName);
