@@ -1,12 +1,10 @@
 package com.example.votingsystem;
 
+import com.example.votingsystem.model.User;
 import com.example.votingsystem.to.UserTo;
-import org.konstr.votingsystem.model.User;
-import org.konstr.votingsystem.to.UserTo;
-import org.konstr.votingsystem.util.UserUtil;
+import com.example.votingsystem.util.UserUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.User;
 
 import static java.util.Objects.requireNonNull;
 
@@ -16,7 +14,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     private UserTo userTo;
 
     public AuthorizedUser(User user) {
-        super(user.getEmail(), user.getPassword(), user.isEnabled(), true, true, true, user.getRoles());
+        super(user.getEmail(), user.getPassword(), true, true, true, true, user.getRoles());
         this.userTo = UserUtil.asTo(user);
     }
 
