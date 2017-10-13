@@ -1,7 +1,7 @@
 DELETE FROM USERS;
 
 INSERT INTO USERS (ID, EMAIL, PASSWORD, ROLE)
-VALUES (1, 'admin@gmail.com', '$2a$10$u/PP688XO9Giezr4/RFZT.rua.t1H2ZcP74fBmjBFszEqbP.nYS.e', 'ADMIN');
+VALUES (1, 'admin@gmail.com', '$2a$10$u/PP688XO9Giezr4/RFZT.rua.t1H2ZcP74fBmjBFszEqbP.nYS.e', 'ROLE_ADMIN');
 
 INSERT INTO USERS (ID, EMAIL, PASSWORD, ROLE)
-VALUES (2, 'user@gmail.com', '$2a$10$l/0pK93oK/nSg/CL0bJsC.FjHhkLJki7JrqtbUyqiwwYeY9uMs1Me', 'USER');
+VALUES (2, 'user@gmail.com', '$2a$10$l/0pK93oK/nSg/CL0bJsC.FjHhkLJki7JrqtbUyqiwwYeY9uMs1Me', 'ROLE_USER');

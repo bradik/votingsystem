@@ -26,12 +26,14 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
     @Test
     public void testGetAll() throws Exception {
 
-        User ADMIN = new User(1, "admin@gmail.com", "admin", Roles.ADMIN);
+        User ADMIN = new User(1, "admin@gmail.com", "admin", Roles.ROLE_ADMIN);
 
         List<User> items1 = userService.getAll();
 
         String actual =
-                mockMvc.perform(get(REST_URL).with(userHttpBasic(ADMIN)))
+                mockMvc.perform(get(REST_URL)
+                        .with(userHttpBasic(ADMIN))
+                )
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andDo(print())
@@ -80,7 +82,7 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
     @Test
     public void testCreate() throws Exception {
 
-        User newItem = new User("newuser@ya.ru", "123", Roles.USER);
+        User newItem = new User("newuser@ya.ru", "123", Roles.ROLE_USER);
 
         int count1 = userService.getAll().size();
 

@@ -7,7 +7,7 @@ import com.example.votingsystem.to.UserTo;
 
 public class UserUtil {
     public static User createNewFromTo(UserTo newUser) {
-        return new User(null, newUser.getEmail(), newUser.getPassword(), Roles.USER);
+        return new User(null, newUser.getEmail(), newUser.getPassword(), Roles.ROLE_USER);
     }
 
     public static UserTo asTo(User user) {
