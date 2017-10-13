@@ -6,6 +6,8 @@ import com.example.votingsystem.util.UserUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 
+import java.util.Collections;
+
 import static java.util.Objects.requireNonNull;
 
 public class AuthorizedUser extends org.springframework.security.core.userdetails.User {
@@ -14,7 +16,7 @@ public class AuthorizedUser extends org.springframework.security.core.userdetail
     private UserTo userTo;
 
     public AuthorizedUser(User user) {
-        super(user.getEmail(), user.getPassword(), true, true, true, true, user.getRoles());
+        super(user.getEmail(), user.getPassword(),Collections.singletonList(user.getRole()));
         this.userTo = UserUtil.asTo(user);
     }
 

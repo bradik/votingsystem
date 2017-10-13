@@ -1,5 +1,6 @@
 package com.example.votingsystem.web;
 
+import com.example.votingsystem.TestUtil;
 import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Roles;
 import com.example.votingsystem.model.User;
@@ -9,7 +10,7 @@ import org.springframework.http.MediaType;
 
 import java.util.List;
 
-import static com.example.votingsystem.web.AdminUserRestControler.REST_URL;
+import static com.example.votingsystem.TestUtil.userHttpBasic;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -20,16 +21,20 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class AdminUserRestControlerTest extends AbstractControllerTest {
 
+    static final String REST_URL = AdminUserRestControler.REST_URL;
+
     @Test
     public void testGetAll() throws Exception {
+
+        User ADMIN = new User(1, "admin@gmail.com", "admin", Roles.ADMIN);
 
         List<User> items1 = userService.getAll();
 
         String actual =
-                mockMvc.perform(get(REST_URL))
+                mockMvc.perform(get(REST_URL).with(userHttpBasic(ADMIN)))
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        //.andDo(print())
+                        .andDo(print())
                         .andReturn().getResponse().getContentAsString();
 
         List<User> items2 = JsonUtil.readValues(actual, User.class);
