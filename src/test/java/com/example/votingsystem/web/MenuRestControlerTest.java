@@ -4,36 +4,28 @@ import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.to.MenuItemTo;
+import com.example.votingsystem.util.PasswordUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-
-import static org.hamcrest.Matchers.comparesEqualTo;
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.not;
-import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.assertThat;
-
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
-
 import java.math.BigDecimal;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static com.example.votingsystem.web.MenuRestControler.REST_URL;
+import static com.example.votingsystem.TestUtil.userHttpBasic;
+import static org.hamcrest.Matchers.is;
+import static org.junit.Assert.assertThat;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
  * Created by Brad on 12.10.2017.
  */
 public class MenuRestControlerTest extends AbstractControllerTest {
 
-    private static final Restaurant TEST_BAR_1 = new Restaurant("Пиворама", "Большевиков  проспект, 18 к2");
+    private static final String REST_URL = MenuRestControler.REST_URL;//"/rest/user/bars"
 
     @Before
     public void beforeTest() {
@@ -41,7 +33,7 @@ public class MenuRestControlerTest extends AbstractControllerTest {
         restaurantService.save(TEST_BAR_1);
 
         List<MenuItemTo> items = new ArrayList<>();
-        for (int i = 0; i < 10; i++) {
+        for (int i = 0; i < 5; i++) {
             items.add(new MenuItemTo("Еда" + i, BigDecimal.valueOf(200 + 5 * i), null));
             menuService.save(TEST_BAR_1.getId(), items.get(i));
         }
@@ -52,14 +44,15 @@ public class MenuRestControlerTest extends AbstractControllerTest {
 
         String response =
         mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE))
-                .andDo(print())
+                .with(userHttpBasic(USER))
+        )
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
         List<Menu> menuList = JsonUtil.readValues(response, Menu.class);
 
-        assertThat(10, is(menuList.size()));
+        assertThat(5, is(menuList.size()));
 
     }
 
@@ -69,8 +62,10 @@ public class MenuRestControlerTest extends AbstractControllerTest {
         String response =
         mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals/by")
                 .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .param("name","Еда1"))
-                .andDo(print())
+                .param("name","Еда1")
+                .with(userHttpBasic(ADMIN))
+        )
+                //.andDo(print())
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 

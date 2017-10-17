@@ -4,4 +4,4 @@ INSERT INTO USERS (ID, EMAIL, PASSWORD, ROLE)
 VALUES (1, 'admin@gmail.com', '$2a$10$u/PP688XO9Giezr4/RFZT.rua.t1H2ZcP74fBmjBFszEqbP.nYS.e', 'ADMIN');
 
 INSERT INTO USERS (ID, EMAIL, PASSWORD, ROLE)
-VALUES (2, 'user@gmail.com', '$2a$10$l/0pK93oK/nSg/CL0bJsC.FjHhkLJki7JrqtbUyqiwwYeY9uMs1Me', 'USER');
+VALUES (2, 'user@gmail.com', '$2a$10$arAXFp.OY1WzRmEGyoovz.CLPSl/gWDxJXPDcir1mg1jBrP.lsHam', 'USER');

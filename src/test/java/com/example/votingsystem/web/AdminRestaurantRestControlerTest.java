@@ -1,23 +1,18 @@
 package com.example.votingsystem.web;
 
 import com.example.votingsystem.json.JsonUtil;
-import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.model.Restaurant;
-import com.example.votingsystem.to.MenuItemTo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
 
-import java.math.BigDecimal;
 import java.util.List;
 
-import static com.example.votingsystem.web.AdminRestaurantRestControler.REST_URL;
-import static org.hamcrest.Matchers.comparesEqualTo;
+import static com.example.votingsystem.TestUtil.userHttpBasic;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.*;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.junit.Assert.assertThat;
+import static org.junit.Assert.assertTrue;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -27,15 +22,12 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
  */
 public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
 
+    private static final String REST_URL = AdminRestaurantRestControler.REST_URL;
+
     @Before
     public void setUp() {
-
-        Restaurant testItem1 = new Restaurant("Пиворама", "Большевиков  проспект, 18 к2");
-        Restaurant testItem2 = new Restaurant("Бахрома", "Наставников, проспек, 24 к1");
-
-        restaurantService.save(testItem1);
-        restaurantService.save(testItem2);
-
+        restaurantService.save(TEST_BAR_1);
+        restaurantService.save(TEST_BAR_2);
     }
 
     @Test
@@ -45,7 +37,9 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
         final String expected = JsonUtil.writeValue(testItem);
 
         String actual =
-                mockMvc.perform(get(REST_URL + "/" + testItem.getId()))
+                mockMvc.perform(get(REST_URL + "/" + testItem.getId())
+                        .with(userHttpBasic(ADMIN))
+                )
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         //.andDo(print())
@@ -60,8 +54,12 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
         Restaurant testItem = restaurantService.getAll().get(0);
         String expected = JsonUtil.writeValue(testItem);
 
+        //TODO: добавить уникальность имени, починить тест!!!
+
         String actual =
-                mockMvc.perform(get(REST_URL + "/by").param("name", testItem.getName()))
+                mockMvc.perform(get(REST_URL + "/by").param("name", testItem.getName())
+                        .with(userHttpBasic(ADMIN))
+                )
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         //.andDo(print())
@@ -76,7 +74,9 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
         List<Restaurant> items1 = restaurantService.getAll();
 
         String actual =
-                mockMvc.perform(get(REST_URL))
+                mockMvc.perform(get(REST_URL)
+                        .with(userHttpBasic(ADMIN))
+                )
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         //.andDo(print())
@@ -98,6 +98,7 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
         mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newItem))
+                .with(userHttpBasic(ADMIN))
         )
                 //.andDo(print())
                 .andExpect(status().isCreated());
@@ -115,10 +116,11 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
 
         int count1 = restaurantService.getAll().size();
 
-        mockMvc.perform(delete(REST_URL + "/" + testItem.getId()))
-                .andExpect(status().isOk())
-                .andDo(print())
-                .andExpect(status().isCreated());
+        mockMvc.perform(delete(REST_URL + "/" + testItem.getId())
+                .with(userHttpBasic(ADMIN))
+        )
+                //.andDo(print())
+                .andExpect(status().isOk());
 
         int count2 = restaurantService.getAll().size();
 

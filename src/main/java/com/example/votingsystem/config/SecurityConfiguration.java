@@ -1,6 +1,8 @@
 package com.example.votingsystem.config;
 
 import com.example.votingsystem.service.impl.UserServiceImpl;
+import com.example.votingsystem.util.PasswordUtil;
+import com.example.votingsystem.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.security.SecurityProperties;
 import org.springframework.context.annotation.Bean;
@@ -32,6 +34,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(AuthenticationManagerBuilder auth) throws Exception {
 		auth
 				.userDetailsService(userService)
+				.passwordEncoder(PasswordUtil.getPasswordEncoder())
 				//.passwordEncoder(new Md5PasswordEncoder())
 		;
 	}
@@ -46,8 +49,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	protected void configure(HttpSecurity http) throws Exception {
 		http
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)
- 				.and().authorizeRequests().antMatchers("/rest/user/**").hasAnyAuthority()
-				.and().authorizeRequests().antMatchers("/rest/admin/**").hasRole("ADMIN")
+//				.and().authorizeRequests().antMatchers("/rest/**").permitAll()
+ 				.and().authorizeRequests().antMatchers("/rest/user/**").hasAnyAuthority("USER", "ADMIN")
+				.and().authorizeRequests().antMatchers("/rest/admin/**").hasAnyAuthority("ADMIN")
 				.and().csrf().disable()
 				.exceptionHandling().authenticationEntryPoint(unauthorizedEntryPoint())
 				.and().httpBasic();

@@ -21,27 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 public class AdminUserRestControlerTest extends AbstractControllerTest {
 
-    static final String REST_URL = AdminUserRestControler.REST_URL;
-
-    @Test
-    public void testGetAll() throws Exception {
-
-        User ADMIN = new User(1, "admin@gmail.com", "admin", Roles.ADMIN);
-
-        List<User> items1 = userService.getAll();
-
-        String actual =
-                mockMvc.perform(get(REST_URL).with(userHttpBasic(ADMIN)))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andDo(print())
-                        .andReturn().getResponse().getContentAsString();
-
-        List<User> items2 = JsonUtil.readValues(actual, User.class);
-
-        Assert.assertTrue(items1.size() == items2.size());
-
-    }
+    private static final String REST_URL = AdminUserRestControler.REST_URL;
 
     @Test
     public void getTest() throws Exception {
@@ -50,32 +30,14 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
         final String expected = JsonUtil.writeValue(testItem);
 
         String actual =
-                mockMvc.perform(get(REST_URL + "/1"))
+                mockMvc.perform(get(REST_URL + "/1").with(userHttpBasic(ADMIN)))
+                        //.andDo(print())
                         .andExpect(status().isOk())
                         .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andDo(print())
                         .andReturn().getResponse().getContentAsString();
 
         Assert.assertThat(actual, containsString(expected));
     }
-
-    @Test
-    public void testGetByEmail() throws Exception {
-
-        User testItem = userService.getById(1);
-        String expected = JsonUtil.writeValue(testItem);
-
-        String actual =
-                mockMvc.perform(get(REST_URL + "/by").param("email", testItem.getEmail()))
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                        .andDo(print())
-                        .andReturn().getResponse().getContentAsString();
-
-        Assert.assertThat(actual, containsString(expected));
-
-    }
-
 
     @Test
     public void testCreate() throws Exception {
@@ -87,9 +49,10 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
         mockMvc.perform(post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newItem))
+                .with(userHttpBasic(ADMIN))
         )
-                .andExpect(status().isCreated())
-                .andDo(print());
+                //.andDo(print())
+                .andExpect(status().isCreated());
 
         int count2 = userService.getAll().size();
 
@@ -102,12 +65,51 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
 
         int count1 = userService.getAll().size();
 
-        mockMvc.perform(delete(REST_URL + "/1"))
-                .andDo(print());
+        mockMvc.perform(delete(REST_URL + "/1").with(userHttpBasic(ADMIN)))
+                //.andDo(print())
+                .andExpect(status().isOk());
 
         int count2 = userService.getAll().size();
 
         Assert.assertTrue(count1 - count2 == 1);
+
+    }
+
+    @Test
+    public void testGetAll() throws Exception {
+
+        //TODO: Починить, не работает в пакетном режиме
+
+        List<User> items1 = userService.getAll();
+
+        String actual =
+                mockMvc.perform(get(REST_URL).with(userHttpBasic(ADMIN)))
+                        .andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andReturn().getResponse().getContentAsString();
+
+        List<User> items2 = JsonUtil.readValues(actual, User.class);
+
+        Assert.assertTrue(items1.size() == items2.size());
+
+    }
+
+    @Test
+    public void testGetByEmail() throws Exception {
+
+        User testItem = userService.getById(1);
+        String expected = JsonUtil.writeValue(testItem);
+
+        String actual =
+                mockMvc.perform(get(REST_URL + "/by")
+                        .param("email", testItem.getEmail()).with(userHttpBasic(ADMIN)))
+                        //.andDo(print())
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andReturn().getResponse().getContentAsString();
+
+        Assert.assertThat(actual, containsString(expected));
 
     }
 

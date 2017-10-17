@@ -14,10 +14,12 @@ import javax.persistence.Table;
 
 @Getter
 @Setter
-@NoArgsConstructor
 @Entity
 @Table(name = "meals")
 public class Meal extends AbstractNamedEntity {
+
+    public Meal() {
+    }
 
     public Meal(String name) {
         this.name = name;

@@ -1,5 +1,6 @@
 package com.example.votingsystem.web;
 
+import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.service.MenuService;
 import com.example.votingsystem.service.RestaurantService;
@@ -22,9 +23,6 @@ public class MenuRestControler {
 
     static final String REST_URL = "/rest/user/bars";
     private final Logger LOG = LoggerFactory.getLogger(getClass());
-
-    @Autowired
-    private RestaurantService restaurantService;
 
     @Autowired
     private MenuService menuService;
