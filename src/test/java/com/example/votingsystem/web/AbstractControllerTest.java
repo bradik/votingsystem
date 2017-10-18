@@ -26,14 +26,6 @@ import java.time.LocalDate;
 @ActiveProfiles(value = "test")
 abstract public class AbstractControllerTest {
 
-    static final LocalDate YESTERDAY = LocalDate.now().minusDays(1);
-
-    static final User ADMIN = new User(1, "admin@gmail.com", "admin", Roles.ADMIN);
-    static final User USER = new User(2, "user@gmail.com", "user", Roles.USER);
-
-    static final Restaurant TEST_BAR_1 = new Restaurant("Пиворама", "Большевиков  проспект, 18 к2");
-    static final Restaurant TEST_BAR_2 = new Restaurant("Бахрома", "Наставников, проспек, 24 к1");
-
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
 
     static {
@@ -51,10 +43,10 @@ abstract public class AbstractControllerTest {
     protected RestaurantService restaurantService;
 
     @Autowired
-    protected MenuService menuService;
+    protected VoteService voteService;
 
     @Autowired
-    protected VoteService voteService;
+    protected MenuService menuService;
 
     @Before
     public void setUp() {

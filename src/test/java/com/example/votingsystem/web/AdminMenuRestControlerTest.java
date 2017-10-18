@@ -4,7 +4,6 @@ import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.to.MenuItemTo;
 import com.example.votingsystem.util.DateTimeUtil;
-import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -13,6 +12,7 @@ import java.math.BigDecimal;
 import java.util.List;
 
 import static com.example.votingsystem.TestUtil.userHttpBasic;
+import static com.example.votingsystem.TestData.*;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
@@ -47,24 +47,6 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
             menuService.save(TEST_BAR_2.getId(), menuItem);
         }
-
-    }
-
-    @After
-    public void afterTest() {
-
-//        List<Menu> menuList = menuService.findBy(TEST_BAR_1.getId(), null, null, null);
-//        for (Menu menu : menuList) {
-//            menuService.delete(menu.getId());
-//        }
-//
-//        menuList = menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null);
-//        for (Menu menu : menuList) {
-//            menuService.delete(menu.getId());
-//        }
-//
-//        restaurantService.delete(TEST_BAR_1.getId());
-//        restaurantService.delete(TEST_BAR_2.getId());
 
     }
 

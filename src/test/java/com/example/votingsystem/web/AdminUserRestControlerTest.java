@@ -1,6 +1,6 @@
 package com.example.votingsystem.web;
 
-import com.example.votingsystem.TestUtil;
+import com.example.votingsystem.TestData;
 import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Roles;
 import com.example.votingsystem.model.User;
@@ -11,17 +11,17 @@ import org.springframework.http.MediaType;
 import java.util.List;
 
 import static com.example.votingsystem.TestUtil.userHttpBasic;
+import static com.example.votingsystem.TestData.ADMIN;
+import static com.example.votingsystem.TestData.USER;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AdminUserRestControlerTest extends AbstractControllerTest {
 
-    private static final String REST_URL = AdminUserRestControler.REST_URL;
+    private static final String REST_URL = AdminUserRestControler.REST_URL;//rest/admin/users
 
     @Test
     public void getTest() throws Exception {
@@ -65,7 +65,9 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
 
         int count1 = userService.getAll().size();
 
-        mockMvc.perform(delete(REST_URL + "/1").with(userHttpBasic(ADMIN)))
+        mockMvc.perform(delete(REST_URL + "/"+USER.getId())
+                .with(userHttpBasic(ADMIN))
+        )
                 //.andDo(print())
                 .andExpect(status().isOk());
 
@@ -77,8 +79,6 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
 
     @Test
     public void testGetAll() throws Exception {
-
-        //TODO: Починить, не работает в пакетном режиме
 
         List<User> items1 = userService.getAll();
 

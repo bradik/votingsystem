@@ -1,21 +1,18 @@
 package com.example.votingsystem.web;
 
-import com.example.votingsystem.TestUtil;
 import com.example.votingsystem.json.JsonUtil;
-import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.to.VoteResultTo;
 import com.example.votingsystem.util.DateTimeUtil;
 import org.junit.Before;
 import org.junit.Test;
-import org.springframework.transaction.annotation.Transactional;
 
-import java.sql.Timestamp;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
 import static com.example.votingsystem.TestUtil.userHttpBasic;
+
+import static com.example.votingsystem.TestData.*;
 
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;

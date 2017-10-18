@@ -2,9 +2,7 @@ package com.example.votingsystem.web;
 
 import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Menu;
-import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.to.MenuItemTo;
-import com.example.votingsystem.util.PasswordUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -14,10 +12,10 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static com.example.votingsystem.TestUtil.userHttpBasic;
+import static com.example.votingsystem.TestData.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
