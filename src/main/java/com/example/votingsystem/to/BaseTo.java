@@ -1,6 +1,6 @@
 package com.example.votingsystem.to;
 
-import com.example.votingsystem.HasId;
+import com.example.votingsystem.model.HasId;
 
 abstract public class BaseTo implements HasId {
     protected Integer id;

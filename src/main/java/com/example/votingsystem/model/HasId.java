@@ -1,4 +1,4 @@
-package com.example.votingsystem;
+package com.example.votingsystem.model;
 
 public interface HasId {
     Integer getId();
