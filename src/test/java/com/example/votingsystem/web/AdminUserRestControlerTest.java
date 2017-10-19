@@ -40,7 +40,7 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testCreate() throws Exception {
+    public void createTest() throws Exception {
 
         User newItem = new User("newuser@ya.ru", "123", Roles.USER);
 
@@ -60,8 +60,26 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
 
     }
 
+
     @Test
-    public void testDelete() throws Exception {
+    public void createDuplicateEmailExceptionTest() throws Exception {
+
+        User newItem = new User("admin@gmail.com", "123", Roles.USER);
+
+        mockMvc.perform(post(REST_URL)
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonUtil.writeValue(newItem))
+                .with(userHttpBasic(ADMIN))
+        )
+                //.andDo(print())
+                .andExpect(status().isCreated());
+
+
+    }
+
+
+    @Test
+    public void deleteTest() throws Exception {
 
         int count1 = userService.getAll().size();
 
@@ -78,7 +96,7 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testGetAll() throws Exception {
+    public void getAllTest() throws Exception {
 
         List<User> items1 = userService.getAll();
 
@@ -96,7 +114,7 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testGetByEmail() throws Exception {
+    public void getByEmailTest() throws Exception {
 
         User testItem = userService.getById(1);
         String expected = JsonUtil.writeValue(testItem);

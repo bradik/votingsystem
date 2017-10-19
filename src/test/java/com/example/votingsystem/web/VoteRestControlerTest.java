@@ -31,7 +31,7 @@ public class VoteRestControlerTest extends AbstractControllerTest {
     private static final String REST_URL = VoteRestControler.REST_URL;//rest/user/votes
 
     @Before
-    public void setUp() {
+    public void beforeTest() {
 
         restaurantService.save(TEST_BAR_1);
         restaurantService.save(TEST_BAR_2);
@@ -66,7 +66,7 @@ public class VoteRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void getResults() throws Exception {
+    public void getResultsTest() throws Exception {
 
         voteService.putVote(TEST_BAR_1.getId(), ADMIN.getId());
         voteService.putVote(TEST_BAR_1.getId(), USER.getId());

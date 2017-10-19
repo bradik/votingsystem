@@ -25,13 +25,13 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
     private static final String REST_URL = AdminRestaurantRestControler.REST_URL;
 
     @Before
-    public void setUp() {
+    public void beforeTest() {
         restaurantService.save(TEST_BAR_1);
         restaurantService.save(TEST_BAR_2);
     }
 
     @Test
-    public void testGet() throws Exception {
+    public void getTest() throws Exception {
 
         Restaurant testItem = restaurantService.getAll().get(0);
         final String expected = JsonUtil.writeValue(testItem);
@@ -49,7 +49,7 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testGetByName() throws Exception {
+    public void getByNameTest() throws Exception {
 
         Restaurant testItem = restaurantService.getAll().get(0);
         String expected = JsonUtil.writeValue(testItem);
@@ -69,7 +69,7 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testGetAll() throws Exception {
+    public void getAllTest() throws Exception {
 
         List<Restaurant> items1 = restaurantService.getAll();
 
@@ -89,7 +89,7 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testUpdate() throws Exception {
+    public void updateTest() throws Exception {
 
         Restaurant newItem = new Restaurant("Bear Bar", "ул. Комсомола д. 45");
 
@@ -110,7 +110,7 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void testDelete() throws Exception {
+    public void deleteTest() throws Exception {
 
         Restaurant testItem = restaurantService.getAll().get(0);
 
