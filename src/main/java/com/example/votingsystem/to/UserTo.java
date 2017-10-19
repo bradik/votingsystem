@@ -13,12 +13,9 @@ import java.io.Serializable;
 
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class UserTo extends BaseTo implements Serializable {
     private static final long serialVersionUID = 1L;
-
-    private Integer id;
 
     @Email
     @NotBlank
@@ -27,6 +24,12 @@ public class UserTo extends BaseTo implements Serializable {
     @NotBlank
     @Size(min = 5, max = 64)
     private String password;
+
+    public UserTo(Integer id, String email, String password) {
+        super(id);
+        this.email = email;
+        this.password = password;
+    }
 
     @Override
     public String toString() {

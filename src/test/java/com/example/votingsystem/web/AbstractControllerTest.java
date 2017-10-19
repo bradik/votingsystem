@@ -1,8 +1,12 @@
 package com.example.votingsystem.web;
 
+import com.example.votingsystem.model.Restaurant;
+import com.example.votingsystem.model.Roles;
+import com.example.votingsystem.model.User;
 import com.example.votingsystem.service.MenuService;
 import com.example.votingsystem.service.RestaurantService;
 import com.example.votingsystem.service.UserService;
+import com.example.votingsystem.service.VoteService;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +18,8 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-@Transactional
+import java.time.LocalDate;
+
 @RunWith(SpringRunner.class)
 @SpringBootTest
 @AutoConfigureMockMvc
@@ -36,6 +41,9 @@ abstract public class AbstractControllerTest {
 
     @Autowired
     protected RestaurantService restaurantService;
+
+    @Autowired
+    protected VoteService voteService;
 
     @Autowired
     protected MenuService menuService;

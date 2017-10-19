@@ -3,11 +3,12 @@ package com.example.votingsystem.model;
 import org.springframework.security.core.GrantedAuthority;
 
 public enum Roles implements GrantedAuthority {
-    ROLE_ADMIN,
-    ROLE_USER;
+    ADMIN,
+    USER,
+    ANONYMOUS;
 
     @Override
     public String getAuthority() {
-        return null;
+        return this.name();
     }
 }
