@@ -1,12 +1,11 @@
 package com.example.votingsystem.service.impl;
 
-import com.example.votingsystem.AuthorizedUser;
+import com.example.votingsystem.web.AuthorizedUser;
 import com.example.votingsystem.model.User;
 import com.example.votingsystem.repository.UserRepository;
 import com.example.votingsystem.service.UserService;
 import com.example.votingsystem.util.UserUtil;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;

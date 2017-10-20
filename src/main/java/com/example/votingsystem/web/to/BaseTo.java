@@ -1,4 +1,4 @@
-package com.example.votingsystem.to;
+package com.example.votingsystem.web.to;
 
 import com.example.votingsystem.model.HasId;
 

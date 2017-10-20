@@ -1,7 +1,6 @@
 package com.example.votingsystem.service;
 
-import com.example.votingsystem.model.Meal;
-import com.example.votingsystem.to.VoteResultTo;
+import com.example.votingsystem.web.to.VoteResultTo;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;

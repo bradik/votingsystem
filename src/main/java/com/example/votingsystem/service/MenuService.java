@@ -1,7 +1,7 @@
 package com.example.votingsystem.service;
 
 import com.example.votingsystem.model.Menu;
-import com.example.votingsystem.to.MenuItemTo;
+import com.example.votingsystem.web.to.MenuItemTo;
 
 import java.time.LocalDate;
 import java.util.List;

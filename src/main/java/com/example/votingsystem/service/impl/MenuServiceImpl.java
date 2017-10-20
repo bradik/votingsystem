@@ -7,13 +7,11 @@ import com.example.votingsystem.repository.MealRepository;
 import com.example.votingsystem.repository.MenuRepository;
 import com.example.votingsystem.repository.RestaurantRepository;
 import com.example.votingsystem.service.MenuService;
-import com.example.votingsystem.to.MenuItemTo;
+import com.example.votingsystem.web.to.MenuItemTo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.math.BigDecimal;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import static java.math.BigDecimal.ZERO;

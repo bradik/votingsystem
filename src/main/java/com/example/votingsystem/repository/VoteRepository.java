@@ -1,7 +1,7 @@
 package com.example.votingsystem.repository;
 
 import com.example.votingsystem.model.Vote;
-import com.example.votingsystem.to.VoteResultTo;
+import com.example.votingsystem.web.to.VoteResultTo;
 import org.springframework.data.jpa.repository.EntityGraph;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -19,7 +19,7 @@ import java.util.List;
 public interface VoteRepository extends JpaRepository<Vote, Integer> {
 
 
-    @Query("select new com.example.votingsystem.to.VoteResultTo(v.date, v.restaurant.name, count(v.id))" +
+    @Query("select new com.example.votingsystem.web.to.VoteResultTo(v.date, v.restaurant.name, count(v.id))" +
             " from Vote as v where v.date = :date group by v.restaurant.id, v.date")
     List<VoteResultTo> getResultsByDate(@Param("date") LocalDate date);
 

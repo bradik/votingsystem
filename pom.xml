@@ -30,6 +30,9 @@
 		<!-- Logging -->
 		<logback.version>1.2.3</logback.version>
 		<slf4j.version>1.7.25</slf4j.version>
+
+		<!--problem-spring-web-->
+		<problem-spring-web.version>0.22.0</problem-spring-web.version>
 	</properties>
 
 	<dependencies>
@@ -188,6 +191,13 @@
 			<groupId>org.hibernate</groupId>
 			<artifactId>hibernate-entitymanager</artifactId>
 			<version>5.2.10.Final</version>
+		</dependency>
+
+		<!--problem-spring-web-->
+		<dependency>
+			<groupId>org.zalando</groupId>
+			<artifactId>problem-spring-web</artifactId>
+			<version>${problem-spring-web.version}</version>
 		</dependency>
 
 		<!-- lombok -->

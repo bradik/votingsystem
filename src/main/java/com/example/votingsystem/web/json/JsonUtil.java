@@ -1,4 +1,4 @@
-package com.example.votingsystem.json;
+package com.example.votingsystem.web.json;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.core.type.TypeReference;

@@ -1,8 +1,8 @@
-package com.example.votingsystem.web;
+package com.example.votingsystem.web.controler;
 
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.service.MenuService;
-import com.example.votingsystem.to.MenuItemTo;
+import com.example.votingsystem.web.to.MenuItemTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +14,6 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 
 import java.net.URI;
 import java.time.LocalDate;
-import java.util.Date;
 import java.util.List;
 
 import static com.example.votingsystem.util.DateTimeUtil.DATE_TIME_PATTERN;

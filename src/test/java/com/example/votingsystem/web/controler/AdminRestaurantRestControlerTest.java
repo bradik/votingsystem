@@ -1,6 +1,6 @@
-package com.example.votingsystem.web;
+package com.example.votingsystem.web.controler;
 
-import com.example.votingsystem.json.JsonUtil;
+import com.example.votingsystem.web.json.JsonUtil;
 import com.example.votingsystem.model.Restaurant;
 import org.junit.Before;
 import org.junit.Test;

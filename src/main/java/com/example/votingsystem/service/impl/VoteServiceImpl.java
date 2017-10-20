@@ -7,11 +7,10 @@ import com.example.votingsystem.repository.RestaurantRepository;
 import com.example.votingsystem.repository.UserRepository;
 import com.example.votingsystem.repository.VoteRepository;
 import com.example.votingsystem.service.VoteService;
-import com.example.votingsystem.to.VoteResultTo;
+import com.example.votingsystem.web.to.VoteResultTo;
 import com.example.votingsystem.util.exception.VoteException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 
 import java.time.LocalDate;

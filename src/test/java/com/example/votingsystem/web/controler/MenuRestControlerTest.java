@@ -1,8 +1,8 @@
-package com.example.votingsystem.web;
+package com.example.votingsystem.web.controler;
 
-import com.example.votingsystem.json.JsonUtil;
+import com.example.votingsystem.web.json.JsonUtil;
 import com.example.votingsystem.model.Menu;
-import com.example.votingsystem.to.MenuItemTo;
+import com.example.votingsystem.web.to.MenuItemTo;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;

@@ -1,17 +1,13 @@
-package com.example.votingsystem.web;
+package com.example.votingsystem.web.controler;
 
-import com.example.votingsystem.AuthorizedUser;
-import com.example.votingsystem.model.Vote;
-import com.example.votingsystem.service.UserService;
+import com.example.votingsystem.web.AuthorizedUser;
 import com.example.votingsystem.service.VoteService;
-import com.example.votingsystem.to.VoteResultTo;
-import com.example.votingsystem.to.VoteTo;
+import com.example.votingsystem.web.to.VoteResultTo;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;

@@ -1,4 +1,4 @@
-package com.example.votingsystem.web;
+package com.example.votingsystem.web.controler;
 
 import com.example.votingsystem.model.User;
 import com.example.votingsystem.service.UserService;

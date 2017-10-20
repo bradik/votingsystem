@@ -1,7 +1,6 @@
-package com.example.votingsystem.web;
+package com.example.votingsystem.web.controler;
 
-import com.example.votingsystem.TestData;
-import com.example.votingsystem.json.JsonUtil;
+import com.example.votingsystem.web.json.JsonUtil;
 import com.example.votingsystem.model.Roles;
 import com.example.votingsystem.model.User;
 import org.junit.Assert;

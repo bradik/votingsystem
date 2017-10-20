@@ -1,4 +1,4 @@
-package com.example.votingsystem.to;
+package com.example.votingsystem.web.to;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;

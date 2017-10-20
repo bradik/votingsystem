@@ -1,9 +1,7 @@
-package com.example.votingsystem.web;
+package com.example.votingsystem.web.controler;
 
-import com.example.votingsystem.json.JsonUtil;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.service.MenuService;
-import com.example.votingsystem.service.RestaurantService;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;

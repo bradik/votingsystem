@@ -3,7 +3,7 @@ package com.example.votingsystem.util;
 
 import com.example.votingsystem.model.Roles;
 import com.example.votingsystem.model.User;
-import com.example.votingsystem.to.UserTo;
+import com.example.votingsystem.web.to.UserTo;
 
 public class UserUtil {
     public static User createNewFromTo(UserTo newUser) {

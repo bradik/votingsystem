@@ -1,7 +1,7 @@
-package com.example.votingsystem;
+package com.example.votingsystem.web;
 
 import com.example.votingsystem.model.User;
-import com.example.votingsystem.to.UserTo;
+import com.example.votingsystem.web.to.UserTo;
 import com.example.votingsystem.util.UserUtil;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
