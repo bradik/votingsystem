@@ -14,10 +14,12 @@ public class MessageUtil {
     private MessageSource messageSource;
 
     public String getMessage(String code, Locale locale) {
+        //return code;
         return messageSource.getMessage(code, null, locale);
     }
 
     public String getMessage(String code) {
+        //return code;
         return getMessage(code, LocaleContextHolder.getLocale());
     }
 }

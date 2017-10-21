@@ -7,6 +7,8 @@ import com.example.votingsystem.service.MenuService;
 import com.example.votingsystem.service.RestaurantService;
 import com.example.votingsystem.service.UserService;
 import com.example.votingsystem.service.VoteService;
+import com.example.votingsystem.util.MessageUtil;
+import com.example.votingsystem.util.exception.ErrorType;
 import org.junit.Before;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +17,14 @@ import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.test.web.servlet.ResultMatcher;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 import java.time.LocalDate;
+import java.util.Locale;
+
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
@@ -48,9 +54,24 @@ abstract public class AbstractControllerTest {
     @Autowired
     protected MenuService menuService;
 
+    @Autowired
+    protected MessageUtil messageUtil;
+
     @Before
     public void setUp() {
 
+    }
+
+    protected String getMessage(String code) {
+        return messageUtil.getMessage(code, Locale.ENGLISH);
+    }
+
+    public ResultMatcher errorType(ErrorType type) {
+        return jsonPath("$.type").value(type.name());
+    }
+
+    public ResultMatcher jsonMessage(String path, String code) {
+        return jsonPath(path).value(getMessage(code));
     }
 
 }

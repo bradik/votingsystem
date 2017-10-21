@@ -1,5 +1,11 @@
 package com.example.votingsystem.util.exception;
 
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
+
+@Getter
+@Setter
 public class ErrorInfo {
     private final String url;
     private final ErrorType type;

@@ -1,20 +1,25 @@
 package com.example.votingsystem.config;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ReloadableResourceBundleMessageSource;
 import org.springframework.http.converter.HttpMessageConverter;
 import org.springframework.http.converter.json.MappingJackson2HttpMessageConverter;
+import org.springframework.web.servlet.DispatcherServlet;
+import org.springframework.web.servlet.LocaleResolver;
 import org.springframework.web.servlet.config.annotation.EnableWebMvc;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
-import org.zalando.problem.ProblemModule;
-import org.zalando.problem.validation.ConstraintViolationProblemModule;
+import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
+import org.springframework.web.servlet.i18n.SessionLocaleResolver;
 
 import java.util.List;
+import java.util.Locale;
 
 @Configuration
-@EnableWebMvc
+@EnableAutoConfiguration
 public class WebConfig extends WebMvcConfigurerAdapter {
 
 	public WebConfig() {
@@ -35,12 +40,4 @@ public class WebConfig extends WebMvcConfigurerAdapter {
 				.setCachePeriod(0);
 	}
 
-
-	@Bean
-	public ObjectMapper objectMapper() {
-		//problem-spring-web
-		return new ObjectMapper()
-				.registerModule(new ProblemModule())
-				.registerModule(new ConstraintViolationProblemModule());
-	}
 }

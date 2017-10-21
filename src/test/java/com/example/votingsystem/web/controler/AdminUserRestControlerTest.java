@@ -1,5 +1,6 @@
 package com.example.votingsystem.web.controler;
 
+import com.example.votingsystem.util.exception.ErrorType;
 import com.example.votingsystem.web.json.JsonUtil;
 import com.example.votingsystem.model.Roles;
 import com.example.votingsystem.model.User;
@@ -40,7 +41,6 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
 
     @Test
     public void createTest() throws Exception {
-
         User newItem = new User("newuser@ya.ru", "123", Roles.USER);
 
         int count1 = userService.getAll().size();
@@ -70,9 +70,10 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(newItem))
                 .with(userHttpBasic(ADMIN))
         )
-                //.andDo(print())
-                .andExpect(status().isCreated());
-
+                .andDo(print())
+                .andExpect(status().isConflict())
+                .andExpect(errorType(ErrorType.DATA_ERROR))
+        ;
 
     }
 
