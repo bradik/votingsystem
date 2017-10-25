@@ -50,8 +50,9 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
     }
 
+
     @Test
-    public void UpdateBarsMenuItemTest() throws Exception {
+    public void updateBarsMenuItemTest() throws Exception {
 
         MenuItemTo itemTo = new MenuItemTo("Уха царская", BigDecimal.valueOf(150.70), null);
 
@@ -74,7 +75,7 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void DeleteMenuItemsTest() throws Exception {
+    public void deleteMenuItemsTest() throws Exception {
 
         List<Menu> list1 =  menuService.getAll(TEST_BAR_1.getId());
 
@@ -92,7 +93,7 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void DeleteMenuItemTest() throws Exception {
+    public void deleteMenuItemTest() throws Exception {
 
         List<Menu> list1 =  menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null);
 

@@ -1,5 +1,6 @@
 package com.example.votingsystem.web.controler;
 
+import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.web.json.JsonUtil;
 import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.web.to.MenuItemTo;
@@ -38,15 +39,60 @@ public class MenuRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
+    public void getAllCachTest() throws Exception {
+
+        Restaurant newBar = new Restaurant("Новый ресторан", "Адрес ресторана");
+
+        restaurantService.save(newBar);
+
+        List<MenuItemTo> items = new ArrayList<>();
+        for (int i = 0; i < 5; i++) {
+            items.add(new MenuItemTo("Еда № " + (i+1), BigDecimal.valueOf(200 + 5 * i), null));
+            menuService.save(newBar.getId(), items.get(i));
+        }
+
+
+        String response =
+                mockMvc.perform(get(REST_URL + "/" + newBar.getId() + "/meals/by")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .param("name", "Еда № 2")
+                        .with(userHttpBasic(USER))
+                )
+                        //.andDo(print())
+                        .andExpect(status().isOk())
+                        .andReturn().getResponse().getContentAsString();
+
+        List<Menu> menuList1 = JsonUtil.readValues(response, Menu.class);
+
+        newBar.setName("Новое имя");
+        restaurantService.save(newBar);
+
+        response =
+                mockMvc.perform(get(REST_URL + "/" + newBar.getId() + "/meals/by")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .param("name", "Еда № 2")
+                        .with(userHttpBasic(USER))
+                )
+                        //.andDo(print())
+                        .andExpect(status().isOk())
+                        .andReturn().getResponse().getContentAsString();
+
+        List<Menu> menuList2 = JsonUtil.readValues(response, Menu.class);
+
+        assertThat("Новый ресторан", is(menuList2.get(0).getRestaurant().getName()));
+
+    }
+
+    @Test
     public void getAllTest() throws Exception {
 
         String response =
-        mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals")
-                .with(userHttpBasic(USER))
-        )
-                //.andDo(print())
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
+                mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals")
+                        .with(userHttpBasic(USER))
+                )
+                        //.andDo(print())
+                        .andExpect(status().isOk())
+                        .andReturn().getResponse().getContentAsString();
 
         List<Menu> menuList = JsonUtil.readValues(response, Menu.class);
 
@@ -58,14 +104,14 @@ public class MenuRestControlerTest extends AbstractControllerTest {
     public void getAllByTest() throws Exception {
 
         String response =
-        mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals/by")
-                .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                .param("name","Еда1")
-                .with(userHttpBasic(ADMIN))
-        )
-                //.andDo(print())
-                .andExpect(status().isOk())
-                .andReturn().getResponse().getContentAsString();
+                mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals/by")
+                        .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
+                        .param("name", "Еда1")
+                        .with(userHttpBasic(ADMIN))
+                )
+                        //.andDo(print())
+                        .andExpect(status().isOk())
+                        .andReturn().getResponse().getContentAsString();
 
         List<Menu> menuList = JsonUtil.readValues(response, Menu.class);
 

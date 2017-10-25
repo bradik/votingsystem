@@ -8,6 +8,7 @@ import lombok.Setter;
 import org.hibernate.annotations.OnDelete;
 import org.hibernate.annotations.OnDeleteAction;
 import org.hibernate.annotations.Type;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -19,7 +20,6 @@ import java.util.Date;
 /**
  * Created by Brad on 03.10.2017.
  */
-@Getter
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
@@ -54,5 +54,23 @@ public class Menu extends AbstractBaseEntity {
         this.meal = meal;
         this.price = price;
         this.date = date;
+    }
+
+    public LocalDate getDate() {
+        return date;
+    }
+
+    @Cacheable("restaurant")
+    public Restaurant getRestaurant() {
+        return restaurant;
+    }
+
+    @Cacheable("meal")
+    public Meal getMeal() {
+        return meal;
+    }
+
+    public BigDecimal getPrice() {
+        return price;
     }
 }

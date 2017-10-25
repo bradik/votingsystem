@@ -5,6 +5,7 @@ import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.repository.MealRepository;
 import com.example.votingsystem.repository.MenuRepository;
+import com.example.votingsystem.repository.jpa.JpaMenuRepository;
 import com.example.votingsystem.repository.RestaurantRepository;
 import com.example.votingsystem.service.MenuService;
 import com.example.votingsystem.web.to.MenuItemTo;
