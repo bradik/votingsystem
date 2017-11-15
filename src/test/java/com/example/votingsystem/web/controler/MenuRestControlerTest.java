@@ -49,14 +49,6 @@ public class MenuRestControlerTest extends AbstractControllerTest {
                         .andExpect(status().isOk())
                         .andReturn().getResponse().getContentAsString();
 
-        String response1 =
-                mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals")
-                        .with(userHttpBasic(USER))
-                )
-                        //.andDo(print())
-                        .andExpect(status().isOk())
-                        .andReturn().getResponse().getContentAsString();
-
         List<Menu> menuList = JsonUtil.readValues(response, Menu.class);
 
         assertThat(5, is(menuList.size()));
