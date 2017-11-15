@@ -1,12 +1,10 @@
 package com.example.votingsystem.web.controler;
 
-import com.example.votingsystem.model.Restaurant;
-import com.example.votingsystem.model.Roles;
-import com.example.votingsystem.model.User;
 import com.example.votingsystem.service.MenuService;
 import com.example.votingsystem.service.RestaurantService;
 import com.example.votingsystem.service.UserService;
 import com.example.votingsystem.service.VoteService;
+import com.example.votingsystem.repository.JpaUtil;
 import com.example.votingsystem.util.MessageUtil;
 import com.example.votingsystem.util.exception.ErrorType;
 import org.junit.Before;
@@ -18,10 +16,9 @@ import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.ResultMatcher;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
-import java.time.LocalDate;
+
 import java.util.Locale;
 
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
@@ -31,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 @ActiveProfiles(value = "test")
 abstract public class AbstractControllerTest {
+
+    @Autowired
+    JpaUtil jpaUtil;
 
     private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
 
@@ -59,7 +59,7 @@ abstract public class AbstractControllerTest {
 
     @Before
     public void setUp() {
-
+        jpaUtil.clear2ndLevelHibernateCache();
     }
 
     protected String getMessage(String code) {

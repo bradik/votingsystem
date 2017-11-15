@@ -21,7 +21,8 @@
         <appender-ref ref="result"/>
     </logger>
 
-    <logger name="org.springframework.jdbc" level="ERROR"/>
+    <!--<logger name="org.hibernate" level="info"/>-->
+    <logger name="org.springframework.jdbc" level="debug"/>
     <logger name="com.example.votingsystem.web" level="DEBUG"/>
     <logger name="com.example.votingsystem" level="ERROR"/>
 

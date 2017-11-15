@@ -23,5 +23,4 @@ import java.util.Locale;
 public class AppConfig {
 
 
-
 }
