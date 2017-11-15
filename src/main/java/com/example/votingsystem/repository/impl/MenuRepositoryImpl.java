@@ -17,7 +17,6 @@ public class MenuRepositoryImpl implements MenuRepository {
     private JpaMenuRepository repository;
 
     @Override
-    @Cacheable("menulist")
     public List<Menu> findBy(Integer barId, LocalDate date, Integer mealId, String mealName) {
 
         return repository.findBy(barId, date, mealId, mealName);

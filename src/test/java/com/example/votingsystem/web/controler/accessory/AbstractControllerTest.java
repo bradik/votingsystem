@@ -1,4 +1,4 @@
-package com.example.votingsystem.web.controler;
+package com.example.votingsystem.web.controler.accessory;
 
 import com.example.votingsystem.service.MenuService;
 import com.example.votingsystem.service.RestaurantService;
