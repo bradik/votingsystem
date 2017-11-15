@@ -21,4 +21,5 @@ public interface RestaurantService {
 
     void delete(Integer id);
 
+    void evictCache();
 }

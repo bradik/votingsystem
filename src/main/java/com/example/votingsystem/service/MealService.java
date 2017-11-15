@@ -18,4 +18,6 @@ public interface MealService {
 
     void delete(Integer id);
 
+    void evictCache();
+
 }
