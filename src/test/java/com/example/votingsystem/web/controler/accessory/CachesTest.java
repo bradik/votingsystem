@@ -12,15 +12,15 @@ import org.springframework.test.context.junit4.SpringRunner;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 
-@RunWith(SpringRunner.class)
-@SpringBootTest
-@AutoConfigureMockMvc
-@ActiveProfiles(value = "test")
+//@RunWith(SpringRunner.class)
+//@SpringBootTest
+//@AutoConfigureMockMvc
+//@ActiveProfiles(value = "test")
 public class CachesTest {
 
-    public static final String NAME_1 = "new bar";
-    public static final String NAME_2 = "test bar";
-    @Autowired
+    private static final String NAME_1 = "new bar";
+    private static final String NAME_2 = "test bar";
+    //@Autowired
     protected RestaurantService restaurantService;
 
     //@Test
