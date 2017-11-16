@@ -1,9 +1,11 @@
 package com.example.votingsystem.web.controler;
 
+import com.example.votingsystem.TestData;
+import com.example.votingsystem.model.Restaurant;
+import com.example.votingsystem.util.DateTimeUtil;
 import com.example.votingsystem.web.controler.accessory.AbstractControllerTest;
 import com.example.votingsystem.web.json.JsonUtil;
 import com.example.votingsystem.web.to.VoteResultTo;
-import com.example.votingsystem.util.DateTimeUtil;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -11,16 +13,12 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static com.example.votingsystem.TestUtil.userHttpBasic;
-
 import static com.example.votingsystem.TestData.*;
-
+import static com.example.votingsystem.TestUtil.userHttpBasic;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 /**
@@ -30,6 +28,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class VoteRestControlerTest extends AbstractControllerTest {
 
     private static final String REST_URL = VoteRestControler.REST_URL;//rest/user/votes
+
+    private static final Restaurant TEST_BAR_1 = TestData.TEST_BAR_6;
+    private static final Restaurant TEST_BAR_2 = TestData.TEST_BAR_7;
 
     @Before
     public void beforeTest() {
@@ -50,7 +51,7 @@ public class VoteRestControlerTest extends AbstractControllerTest {
                 .param("date", DateTimeUtil.of(YESTERDAY))
                 .with(userHttpBasic(USER))
         )
-                //.andDo(print())
+                .andDo(print())
                 .andExpect(status().isOk())
                 .andReturn().getResponse().getContentAsString();
 
@@ -77,7 +78,7 @@ public class VoteRestControlerTest extends AbstractControllerTest {
                         .param("date", DateTimeUtil.of(YESTERDAY))
                         .with(userHttpBasic(USER))
                 )
-                        //.andDo(print())
+                        .andDo(print())
                         .andExpect(status().isOk())
                         .andReturn().getResponse().getContentAsString();
 
@@ -99,7 +100,7 @@ public class VoteRestControlerTest extends AbstractControllerTest {
         mockMvc.perform(put(REST_URL + "/bar/" + TEST_BAR_1.getId())
                 .with(userHttpBasic(USER))
         )
-                //.andDo(print())
+                .andDo(print())
                 .andExpect(status().isOk());
 
     }

@@ -71,4 +71,14 @@ public class User extends AbstractBaseEntity {
         this.role = role;
     }
 
+    @Override
+    public String toString() {
+        return "User{" +
+                "id='" + getId() + '\'' +
+                ", email='" + email + '\'' +
+                ", role=" + role +
+                '}';
+    }
+
+
 }

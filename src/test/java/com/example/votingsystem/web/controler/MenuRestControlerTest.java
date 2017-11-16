@@ -1,8 +1,10 @@
 package com.example.votingsystem.web.controler;
 
+import com.example.votingsystem.TestData;
+import com.example.votingsystem.model.Menu;
+import com.example.votingsystem.model.Restaurant;
 import com.example.votingsystem.web.controler.accessory.AbstractControllerTest;
 import com.example.votingsystem.web.json.JsonUtil;
-import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.web.to.MenuItemTo;
 import org.junit.Before;
 import org.junit.Test;
@@ -12,8 +14,9 @@ import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
+import static com.example.votingsystem.TestData.ADMIN;
+import static com.example.votingsystem.TestData.USER;
 import static com.example.votingsystem.TestUtil.userHttpBasic;
-import static com.example.votingsystem.TestData.*;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -25,6 +28,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 public class MenuRestControlerTest extends AbstractControllerTest {
 
     private static final String REST_URL = MenuRestControler.REST_URL;//"/rest/user/bars"
+
+    private static final Restaurant TEST_BAR_1 = TestData.TEST_BAR_5;
 
     @Before
     public void beforeTest() {
@@ -45,7 +50,7 @@ public class MenuRestControlerTest extends AbstractControllerTest {
                 mockMvc.perform(get(REST_URL + "/" + TEST_BAR_1.getId() + "/meals")
                         .with(userHttpBasic(USER))
                 )
-                        //.andDo(print())
+                        .andDo(print())
                         .andExpect(status().isOk())
                         .andReturn().getResponse().getContentAsString();
 
@@ -64,7 +69,7 @@ public class MenuRestControlerTest extends AbstractControllerTest {
                         .param("name", "Еда1")
                         .with(userHttpBasic(ADMIN))
                 )
-                        //.andDo(print())
+                        .andDo(print())
                         .andExpect(status().isOk())
                         .andReturn().getResponse().getContentAsString();
 

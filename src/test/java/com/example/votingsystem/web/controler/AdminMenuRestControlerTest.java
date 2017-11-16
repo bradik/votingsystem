@@ -1,10 +1,12 @@
 package com.example.votingsystem.web.controler;
 
+import com.example.votingsystem.TestData;
+import com.example.votingsystem.model.Menu;
+import com.example.votingsystem.model.Restaurant;
+import com.example.votingsystem.util.DateTimeUtil;
 import com.example.votingsystem.web.controler.accessory.AbstractControllerTest;
 import com.example.votingsystem.web.json.JsonUtil;
-import com.example.votingsystem.model.Menu;
 import com.example.votingsystem.web.to.MenuItemTo;
-import com.example.votingsystem.util.DateTimeUtil;
 import org.junit.Before;
 import org.junit.Test;
 import org.springframework.http.MediaType;
@@ -12,21 +14,24 @@ import org.springframework.http.MediaType;
 import java.math.BigDecimal;
 import java.util.List;
 
+import static com.example.votingsystem.TestData.ADMIN;
+import static com.example.votingsystem.TestData.YESTERDAY;
 import static com.example.votingsystem.TestUtil.userHttpBasic;
-import static com.example.votingsystem.TestData.*;
 import static org.hamcrest.Matchers.comparesEqualTo;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
     private static final String REST_URL = AdminMenuRestControler.REST_URL;//rest/admin/bars
+
+    private static final Restaurant TEST_BAR_1 = TestData.TEST_BAR_3;
+    private static final Restaurant TEST_BAR_2 = TestData.TEST_BAR_4;
 
     @Before
     public void beforeTest() {
@@ -64,7 +69,7 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
                         .content(JsonUtil.writeValue(itemTo))
                         .with(userHttpBasic(ADMIN))
                 )
-//                        .andDo(print())
+                        .andDo(print())
                         .andExpect(status().isCreated())
                         .andReturn().getResponse().getContentAsString();
 
