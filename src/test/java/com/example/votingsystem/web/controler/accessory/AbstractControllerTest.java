@@ -24,6 +24,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.MvcResult;
 import org.springframework.test.web.servlet.ResultHandler;
 import org.springframework.test.web.servlet.ResultMatcher;
+import org.springframework.test.web.servlet.result.MockMvcResultHandlers;
 import org.springframework.web.filter.CharacterEncodingFilter;
 
 
@@ -117,7 +118,7 @@ abstract public class AbstractControllerTest {
     }
 
     public ResultHandler print() {
-        return MOCK_RESULT_HANDLER;
-        //return MockMvcResultHandlers.print();
+        //return MOCK_RESULT_HANDLER;
+        return MockMvcResultHandlers.print();
     }
 }

@@ -8,7 +8,7 @@ import javax.persistence.*;
 
 @MappedSuperclass
 @Access(AccessType.FIELD)
-public abstract class AbstractBaseEntity implements Persistable<Integer>{
+public abstract class AbstractBaseEntity implements HasId, Persistable<Integer>{
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     @Access(value = AccessType.PROPERTY)

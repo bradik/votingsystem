@@ -20,11 +20,16 @@ public class TestData {
     //new users
     public static final User NEW_USER_1 = new User(null, "user1@gmail.com", "user1", Roles.USER);
     public static final User NEW_USER_2 = new User(null, "user2@gmail.com", "user2", Roles.USER);
+    public static final User NEW_USER_3 = new User(null, "user3@gmail.com", "user3", Roles.USER);
     public static final User NEW_USER_EMAIL_DUBLICATE = new User(null, "user@gmail.com", "user4", Roles.USER);
+    public static final User NEW_USER_SMALL_PASW = new User(null, "user@gmail.com", "12", Roles.USER);
 
     //to AdminRestaurantRestControlerTest
     public static final Restaurant TEST_BAR_1 = new Restaurant("Пиворама", "Большевиков  проспект, 18 к2");
     public static final Restaurant TEST_BAR_2 = new Restaurant("Бахрома", "Наставников, проспек, 24 к1");
+    public static final Restaurant TEST_BAR_NEW = new Restaurant("Бахрома Новый", "Наставников, проспек, 24 к11");
+    public static final Restaurant TEST_BAR_UPDATE = new Restaurant("Bear Bar", "ул. Комсомола д. 45");
+    public static final Restaurant TEST_BAR_DELETE = new Restaurant("Bear Bar 11", "ул. Комсомола д. 451");
     //to AdminMenuRestControlerTest
     public static final Restaurant TEST_BAR_3 = new Restaurant("Лучший ресторан", "пр. Узников комунизма, 18 к2");
     public static final Restaurant TEST_BAR_4 = new Restaurant("Семь красавиц", "ул Банкиров, 24 к1");
@@ -35,5 +40,6 @@ public class TestData {
     public static final Restaurant TEST_BAR_7 = new Restaurant("Семь красавиц", "ул Банкиров, 24 к1");
 
     public static final BeanMatcher<User> USER_MATCHER = BeanMatcher.of(User.class);
+    public static final BeanMatcher<Restaurant> BAR_MATCHER = BeanMatcher.of(Restaurant.class);
 
 }

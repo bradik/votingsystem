@@ -14,6 +14,9 @@ import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import java.net.URI;
 import java.util.List;
 
+import static com.example.votingsystem.util.ValidationUtil.checkIdConsistent;
+import static com.example.votingsystem.util.ValidationUtil.checkNew;
+
 /**
  * Created by Brad on 16.09.2017.
  */
@@ -54,16 +57,21 @@ public class AdminRestaurantRestControler {
     }
 
     @PostMapping(consumes = MediaType.APPLICATION_JSON_VALUE)
-    public ResponseEntity<Restaurant> update(@RequestBody Restaurant restaurant) {
-        LOG.info("update() request received");
-
+    public ResponseEntity<Restaurant> create(@RequestBody Restaurant restaurant) {
+        LOG.info("create() request received");
+        checkNew(restaurant);
         Restaurant created = restaurantService.save(restaurant);
-
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL + "/{id}")
                 .buildAndExpand(created.getId()).toUri();
-
         return ResponseEntity.created(uriOfNewResource).body(created);
+    }
+
+    @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    public void update(@RequestBody Restaurant restaurant, @PathVariable("id") int id) {
+        LOG.info("update " + restaurant);
+        checkIdConsistent(restaurant, id);
+        restaurantService.save(restaurant);
     }
 
     @DeleteMapping(value = "/{id}")

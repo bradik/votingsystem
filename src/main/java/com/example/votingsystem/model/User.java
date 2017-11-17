@@ -3,6 +3,7 @@ package com.example.votingsystem.model;
 import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import org.hibernate.validator.constraints.Email;
+import org.hibernate.validator.constraints.Length;
 import org.hibernate.validator.constraints.NotBlank;
 
 import javax.persistence.*;
@@ -23,6 +24,7 @@ public class User extends AbstractBaseEntity {
     private String email;
 
     @NotBlank
+    @Length(min = 5, max = 64)
     @Column(name = "password")
     private String password;
 

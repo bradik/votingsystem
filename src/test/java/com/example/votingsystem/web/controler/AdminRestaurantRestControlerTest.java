@@ -12,8 +12,8 @@ import java.util.List;
 import static com.example.votingsystem.TestData.*;
 import static com.example.votingsystem.TestUtil.userHttpBasic;
 import static org.hamcrest.core.StringContains.containsString;
-import static org.junit.Assert.assertThat;
-import static org.junit.Assert.assertTrue;
+import static org.junit.Assert.*;
+import static org.hamcrest.Matchers.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -29,6 +29,27 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
     public void beforeTest() {
         restaurantService.save(TEST_BAR_1);
         restaurantService.save(TEST_BAR_2);
+    }
+
+    @Test
+    public void getAllTest() throws Exception {
+
+        List<Restaurant> items1 = restaurantService.getAll();
+
+        String actual =
+                mockMvc.perform(get(REST_URL)
+                        .with(userHttpBasic(ADMIN))
+                )
+                        .andExpect(status().isOk())
+                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
+                        .andDo(print())
+                        .andReturn().getResponse().getContentAsString();
+
+        List<Restaurant> items2 = JsonUtil.readValues(actual, Restaurant.class);
+
+
+        assertTrue(items1.size() == items2.size());
+
     }
 
     @Test
@@ -68,62 +89,64 @@ public class AdminRestaurantRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void getAllTest() throws Exception {
+    public void createTest() throws Exception {
 
-        List<Restaurant> items1 = restaurantService.getAll();
+        final Restaurant newItem = TEST_BAR_NEW;
 
-        String actual =
-                mockMvc.perform(get(REST_URL)
+        String response =
+                mockMvc.perform(post(REST_URL)
+                        .contentType(MediaType.APPLICATION_JSON)
+                        .content(JsonUtil.writeValue(newItem))
                         .with(userHttpBasic(ADMIN))
                 )
-                        .andExpect(status().isOk())
-                        .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
                         .andDo(print())
+                        .andExpect(status().isCreated())
                         .andReturn().getResponse().getContentAsString();
 
-        List<Restaurant> items2 = JsonUtil.readValues(actual, Restaurant.class);
-
-        assertTrue(items1.size() == items2.size());
-
+        Restaurant actual = JsonUtil.readValue(response, Restaurant.class);
+        newItem.setId(actual.getId());
+        BAR_MATCHER.assertEquals(newItem, actual);
     }
 
     @Test
     public void updateTest() throws Exception {
 
-        Restaurant newItem = new Restaurant("Bear Bar", "ул. Комсомола д. 45");
+        final String newName = "updated";
 
-        int count1 = restaurantService.getAll().size();
+        Restaurant updated = TEST_BAR_UPDATE;
+        restaurantService.save(updated);
 
-        mockMvc.perform(post(REST_URL)
+        updated.setName(newName);
+
+        mockMvc.perform(put(REST_URL + "/" + updated.getId())
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonUtil.writeValue(newItem))
-                .with(userHttpBasic(ADMIN))
-        )
-                .andDo(print())
-                .andExpect(status().isCreated());
-
-        int count2 = restaurantService.getAll().size();
-
-        assertTrue(count2 - count1 == 1);
-
-    }
-
-    @Test
-    public void deleteTest() throws Exception {
-
-        Restaurant testItem = restaurantService.getAll().get(0);
-
-        int count1 = restaurantService.getAll().size();
-
-        mockMvc.perform(delete(REST_URL + "/" + testItem.getId())
+                .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(ADMIN))
         )
                 .andDo(print())
                 .andExpect(status().isOk());
 
-        int count2 = restaurantService.getAll().size();
+        assertThat(updated, is(restaurantService.getById(updated.getId())));
+    }
 
-        assertTrue(count1 - count2 == 1);
+    @Test
+    public void deleteTest() throws Exception {
+
+        final Restaurant deleted = TEST_BAR_DELETE;
+
+        restaurantService.save(deleted);
+
+        final int before = restaurantService.getAll().size();
+
+        mockMvc.perform(delete(REST_URL + "/" + deleted.getId())
+                .with(userHttpBasic(ADMIN))
+        )
+                .andDo(print())
+                .andExpect(status().isOk());
+
+        final int after = restaurantService.getAll().size();
+
+        assertThat(after, equalTo(before - 1));
 
     }
 
