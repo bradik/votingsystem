@@ -9,8 +9,12 @@ import javax.persistence.*;
 @MappedSuperclass
 @Access(AccessType.FIELD)
 public abstract class AbstractBaseEntity implements HasId, Persistable<Integer>{
+    public static final int START_SEQ = 100001;
+
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
+    //@GeneratedValue(strategy = GenerationType.AUTO)
+    @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
+    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
     @Access(value = AccessType.PROPERTY)
     private Integer id;
 
