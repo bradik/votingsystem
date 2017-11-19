@@ -46,7 +46,10 @@
 ####Delete menu items by
     curl -s -X DELETE http://localhost:8080/rest/admin/bars/100044/meals/by?date=2017-11-18@name='meal name' --user admin@gmail.com:admin
 ####Get all menu items
-####Get all menu items by
+    curl -s http://localhost:8080/rest/user/bars/100044/meals --user user@gmail.com:user
+####Get all menu items by id or name meal  
+    curl -s http://localhost:8080/rest/user/bars/100044/meals/by?id=100087 --user user@gmail.com:user
+    curl -s http://localhost:8080/rest/user/bars/100044/meals/by?name='meal name' --user user@gmail.com:user
 
 ##Vote
 #####Vote for the restaurant

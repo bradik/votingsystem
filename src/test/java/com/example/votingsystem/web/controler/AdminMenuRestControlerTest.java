@@ -75,7 +75,7 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
         Menu testMenu = JsonUtil.readValue(response, Menu.class);
 
-        assertThat("Уха царская", containsString(testMenu.getMeal().getName()));
+        assertThat("Уха царская", is(testMenu.getMeal().getName()));
         assertThat(BigDecimal.valueOf(150.70), comparesEqualTo(testMenu.getPrice()));
 
     }
@@ -94,7 +94,8 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
         List<Menu> list2 =  menuService.getAll(TEST_BAR_1.getId());
 
-        assertThat(list1.size() - list2.size(), is(2));
+        final int actualSize = list1.size() - list2.size();
+        assertThat(actualSize, is(2));
 
     }
 
@@ -113,7 +114,8 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
 
         List<Menu> list2 = menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null);
 
-        assertThat(list1.size() - list2.size(), is(1));
+        final int actualSize = list1.size() - list2.size();
+        assertThat(actualSize, is(1));
     }
 
 }
