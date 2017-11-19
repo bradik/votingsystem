@@ -23,6 +23,7 @@ import static org.hamcrest.core.StringContains.containsString;
 import static org.junit.Assert.assertThat;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
@@ -61,12 +62,11 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
     public void updateBarsMenuItemTest() throws Exception {
 
         MenuItemTo itemTo = new MenuItemTo("Уха царская", BigDecimal.valueOf(150.70), null);
-
-
+        String content = JsonUtil.writeValue(itemTo);
         String response =
-                mockMvc.perform(post(REST_URL + "/" + TEST_BAR_1.getId() + "/meals")
+                mockMvc.perform(put(REST_URL + "/" + TEST_BAR_1.getId() + "/meals")
                         .contentType(MediaType.APPLICATION_JSON_UTF8_VALUE)
-                        .content(JsonUtil.writeValue(itemTo))
+                        .content(content)
                         .with(userHttpBasic(ADMIN))
                 )
                         .andDo(print())
@@ -99,7 +99,7 @@ public class AdminMenuRestControlerTest extends AbstractControllerTest {
     }
 
     @Test
-    public void deleteMenuItemTest() throws Exception {
+    public void deleteMenuItemsByNameOnDateTest() throws Exception {
 
         List<Menu> list1 =  menuService.findBy(TEST_BAR_2.getId(), YESTERDAY, null, null);
 

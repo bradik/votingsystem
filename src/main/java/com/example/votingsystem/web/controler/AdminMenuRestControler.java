@@ -33,7 +33,7 @@ public class AdminMenuRestControler {
     @Autowired
     private MenuService menuService;
 
-    @PostMapping(value = "/{id}/meals", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PutMapping(value = "/{id}/meals", consumes = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Menu> updateBarsMenuItem(@PathVariable("id") Integer barId, @RequestBody MenuItemTo itemTo) {
         LOG.info("updateBarsMenuItem() request received");
         LOG.debug("barid = {}, itemTo = {}", barId, itemTo);

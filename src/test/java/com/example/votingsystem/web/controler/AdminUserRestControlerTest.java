@@ -117,7 +117,9 @@ public class AdminUserRestControlerTest extends AbstractControllerTest {
         List<User> inspected = userService.getAll();
         //inspected.add(NEW_USER_2);
 
-        mockMvc.perform(get(REST_URL).with(userHttpBasic(ADMIN)))
+        mockMvc.perform(get(REST_URL)
+                .with(userHttpBasic(ADMIN))
+        )
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
