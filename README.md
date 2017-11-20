@@ -50,9 +50,11 @@
 ####Get all menu items by id or name meal  
     curl -s http://localhost:8080/rest/user/bars/100044/meals/by?id=100087 --user user@gmail.com:user
     curl -s http://localhost:8080/rest/user/bars/100044/meals/by?name='meal name' --user user@gmail.com:user
-
 ##Vote
 #####Vote for the restaurant
+    curl -s -X PUT http://localhost:8080/rest/user/votes/bar/100044 --user admin@gmail.com:admin
 #####Get curent vote results
+    curl -s http://localhost:8080/rest/user/votes/results --user user@gmail.com:user
 #####Get vote results by date
+    curl -s http://localhost:8080/rest/user/votes/results/by?date=2017-11-17 --user user@gmail.com:user
  
